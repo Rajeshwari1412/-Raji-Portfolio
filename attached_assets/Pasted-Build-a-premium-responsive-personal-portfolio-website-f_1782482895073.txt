@@ -1,0 +1,537 @@
+Build a premium, responsive personal portfolio website for a Computer Science Engineering student named Kotoju Rajeshwari. The website should have a futuristic, elegant, and minimal design with smooth animations, glassmorphism effects, and modern UI. Avoid generic portfolio templates. Make it look like a portfolio worthy of a Google Student Ambassador, AI Engineer, and Hackathon Finalist.
+
+Tech Stack
+
+Use:
+
+Next.js 15 (App Router)
+React 19
+TypeScript
+Tailwind CSS
+Framer Motion
+GSAP for premium animations
+Three.js / React Three Fiber (Hero Background)
+Shadcn UI
+Lucide Icons
+Lenis Smooth Scroll
+React CountUp
+EmailJS for Contact Form
+Vercel Deployment Ready
+Theme
+
+Create a futuristic dark theme.
+
+Primary Color:
+#6C63FF
+
+Secondary:
+#00E5FF
+
+Accent:
+#8B5CF6
+
+Background:
+#050816
+
+Cards:
+rgba(255,255,255,0.06)
+
+Text:
+White + Soft Gray
+
+Gradient
+
+Purple → Blue → Cyan
+
+Use Glassmorphism everywhere.
+
+Hero Section
+
+Create an eye-catching landing page.
+
+Left Side
+
+Large Name
+
+Kotoju Rajeshwari
+
+Subtitle
+
+AI • Machine Learning • Salesforce Developer • Full Stack Developer
+
+Description
+
+Computer Science Engineering student passionate about Artificial Intelligence, scalable applications, innovation, and building impactful real-world solutions.
+
+Buttons
+
+Download Resume
+
+View Projects
+
+Right Side
+
+Interactive 3D animated AI globe
+
+Floating icons
+
+Python
+
+AI
+
+Salesforce
+
+React
+
+GitHub
+
+Google Gemini
+
+Animated particles
+
+Typing animation
+
+Navigation
+
+Floating navbar
+
+Blur background
+
+Sections
+
+Home
+
+About
+
+Skills
+
+Experience
+
+Projects
+
+Achievements
+
+Certifications
+
+Contact
+
+Smooth scroll
+
+About Me
+
+Use animated timeline.
+
+Include
+
+Computer Science Engineering Student
+
+Google Gemini Campus Ambassador
+
+Salesforce Developer
+
+AI/ML Enthusiast
+
+Open Source Contributor
+
+Hackathon Finalist
+
+Show education cards with timeline animation.
+
+Skills Section
+
+Create animated cards.
+
+Programming
+
+Python
+
+Java
+
+JavaScript
+
+C
+
+Frontend
+
+HTML
+
+CSS
+
+React Native
+
+Flutter
+
+Backend
+
+PostgreSQL
+
+MySQL
+
+Supabase
+
+AI
+
+Machine Learning
+
+NumPy
+
+Pandas
+
+Matplotlib
+
+Scikit-Learn
+
+Tools
+
+Git
+
+GitHub
+
+VS Code
+
+Canva
+
+Core
+
+DSA
+
+DBMS
+
+Operating Systems
+
+Computer Networks
+
+Object Oriented Programming
+
+Each card should glow on hover.
+
+Add progress animations.
+
+Experience Section
+
+Vertical animated timeline.
+
+Salesforce Developer Intern
+
+SmartBridge
+
+AICTE Internship
+
+Highlights
+
+Apex Classes
+
+Triggers
+
+Lightning Web Components
+
+SOQL
+
+CRM Development
+
+AI/ML Intern
+
+IBM SkillsBuild
+
+Highlights
+
+Machine Learning
+
+EDA
+
+Feature Engineering
+
+Cross Validation
+
+Scikit Learn
+
+Python
+
+Projects Section
+
+Create premium project cards with hover effects.
+
+Project 1
+
+Smart Guardian
+
+AI Road Safety System
+
+Features
+
+AI
+
+GPS
+
+Accident Detection
+
+Emergency Alert
+
+SAP Innovation Marathon Finalist
+
+94% Prediction Accuracy
+
+Add
+
+Live Demo button
+
+GitHub button
+
+Project 2
+
+Tripzy
+
+AI Travel Recommendation
+
+Features
+
+Weather API
+
+Budget Optimization
+
+Recommendation Engine
+
+92% Accuracy
+
+Project 3
+
+Medicine Donation Center Locator
+
+Features
+
+Medicine Search
+
+Donation Tracking
+
+Category Guidelines
+
+96% Accuracy
+
+Each project should have
+
+Animated gradient border
+
+Hover tilt
+
+Floating shadow
+
+Technology badges
+
+Achievements
+
+Create animated trophy cards.
+
+Google Gemini Campus Ambassador
+
+SAP Innovation Marathon Finalist
+
+Campus Ambassador Careers360
+
+GirlScript Summer of Code Contributor
+
+National Hackathon Participant
+
+Animate numbers.
+
+Certifications
+
+Responsive certificate cards.
+
+IBM AI
+
+IBM SkillsBuild
+
+Salesforce Internship
+
+NPTEL
+
+Git & GitHub
+
+Kaggle AI Agents
+
+Hover animations.
+
+Contact Section
+
+Modern glass card.
+
+Fields
+
+Name
+
+Email
+
+Subject
+
+Message
+
+Animated Send Button
+
+EmailJS integration
+
+Also include
+
+Phone
+
+Email
+
+LinkedIn
+
+GitHub
+
+Footer
+
+Minimal footer
+
+Made with ❤️ by Kotoju Rajeshwari
+
+Social icons
+
+GitHub
+
+LinkedIn
+
+Email
+
+Back To Top button
+
+Animations
+
+Use
+
+Framer Motion
+
+GSAP
+
+Lenis
+
+Mouse follower
+
+Cursor glow
+
+Reveal on scroll
+
+Fade
+
+Slide
+
+Scale
+
+Floating effects
+
+Parallax scrolling
+
+Interactive cards
+
+Gradient animations
+
+Typing animation
+
+Animated counters
+
+Magnetic buttons
+
+Extra Premium Features
+
+Dark/Light Mode
+
+Glassmorphism
+
+Animated AI Background
+
+Particle Effects
+
+Floating Tech Icons
+
+Project Filtering
+
+Skill Search
+
+Loading Screen
+
+Animated Cursor
+
+Resume Download
+
+SEO Optimized
+
+Responsive on all devices
+
+Lighthouse Score above 95
+
+Performance optimized
+
+Accessibility optimized
+
+Content
+
+Use the following information:
+
+Name:
+Kotoju Rajeshwari
+
+Role:
+Computer Science Engineering Student
+
+Summary:
+Computer Science Engineering student skilled in AI/ML, Salesforce Development, and Full-Stack Development with experience in internships, innovative projects, hackathons, and campus ambassador programs. Passionate about creating impactful and scalable real-world solutions.
+
+Education:
+
+KPRIT (2023–2027)
+
+CGPA 8.0+
+
+Narayana Junior College (90%)
+
+SSC (96%)
+
+Experience:
+
+Salesforce Developer Intern
+
+IBM AI/ML Intern
+
+Projects:
+
+Smart Guardian
+
+Tripzy
+
+Medicine Donation Center Locator
+
+Achievements:
+
+Google Gemini Campus Ambassador
+
+SAP Innovation Marathon Finalist
+
+Campus Ambassador Careers360
+
+GirlScript Summer of Code Contributor
+
+Certifications:
+
+IBM AI
+
+IBM SkillsBuild
+
+Salesforce Internship
+
+NPTEL
+
+Git & GitHub
+
+Kaggle AI Agents
+
+Contact:
+
+Email: rajukjth@gmail.com
+
+GitHub: github.com/Rajeshwari412
+
+LinkedIn: linkedin.com/in/rajeshwari412
+
+Final Goal
+
+Create a premium, futuristic, recruiter-focused portfolio that feels like the personal website of a Google software engineer or AI researcher, with unique layouts, immersive animations, and excellent performance. The design should avoid common templates, emphasize storytelling, and make projects and achievements the centerpiece while remaining clean, professional, and fully responsive.

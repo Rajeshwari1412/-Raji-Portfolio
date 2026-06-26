@@ -1,44 +1,50 @@
-# [Project name]
+# Kotoju Rajeshwari — Portfolio
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A premium, futuristic personal portfolio website for Kotoju Rajeshwari — CS student, Google Gemini Campus Ambassador, AI/ML enthusiast, and Salesforce Developer.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/portfolio run dev` — run portfolio (port assigned by workflow)
+- `pnpm --filter @workspace/portfolio run typecheck` — typecheck portfolio
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 19 + Vite + Tailwind CSS
+- Animations: Framer Motion, GSAP, Lenis smooth scroll
+- UI extras: react-type-animation, react-countup, lucide-react
+- No backend required (static portfolio)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/portfolio/src/pages/Portfolio.tsx` — root page, orchestrates all sections
+- `artifacts/portfolio/src/components/sections/` — Hero, About, Skills, Experience, Projects, Achievements, Certifications, Contact
+- `artifacts/portfolio/src/components/layout/` — Navbar, Footer
+- `artifacts/portfolio/src/components/ui/LoadingScreen.tsx` — animated KR. intro screen
+- `artifacts/portfolio/src/components/ui/MouseFollower.tsx` — custom cursor glow
+- `artifacts/portfolio/src/index.css` — brand palette + glassmorphism utilities
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- **No Three.js/WebGL**: The hero globe is a pure CSS/Framer Motion orb — WebGL is unavailable in the Replit preview sandbox, so a CSS sphere with orbiting badges was used instead.
+- **Loading screen**: 2.5s animated "KR. — INITIALIZING PROTOCOL" loading screen on first visit before hero reveals.
+- **Lenis smooth scroll**: Initialised in Portfolio.tsx; `scroll-behavior: auto` on html to avoid conflict.
+- **Framer Motion variants typed**: `itemVariants` typed as `Variants` with cubic-bezier easing arrays instead of string ease names to satisfy strict TS typings.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Single-page portfolio with 9 sections: Hero (CSS animated globe + typing animation), About (bio + education timeline), Skills (searchable categorised cards), Experience (vertical timeline), Projects (glass cards with filtering), Achievements (animated counters), Certifications (glass cards), Contact (form + social links), Footer.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+_Populate as you build._
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Do NOT add Three.js/React Three Fiber — WebGL context fails in Replit preview.
+- Framer Motion `Variants` type requires cubic-bezier arrays `[n,n,n,n]` not string ease names in nested transition objects.
+- Google Fonts `@import` must be the first line in `index.css` (before `@import 'tailwindcss'`).
 
 ## Pointers
 

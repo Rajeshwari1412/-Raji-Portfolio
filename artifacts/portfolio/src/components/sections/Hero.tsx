@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { Download, ChevronRight } from 'lucide-react';
+import { Download, ChevronRight, Cpu, Database, Sparkles, Code2, Cloud, Terminal } from 'lucide-react';
 
 const TECH_BADGES = [
   { label: 'Python', color: '#6C63FF', delay: 0, angle: -30 },
@@ -8,6 +8,15 @@ const TECH_BADGES = [
   { label: 'Salesforce', color: '#8B5CF6', delay: 0.8, angle: 114 },
   { label: 'React', color: '#00E5FF', delay: 1.2, angle: 186 },
   { label: 'Gemini', color: '#6C63FF', delay: 1.6, angle: 258 },
+];
+
+const FLOATING_BG_ICONS = [
+  { icon: Cpu, top: '12%', left: '8%', size: 36, color: '#6C63FF', delay: 0 },
+  { icon: Code2, top: '22%', left: '42%', size: 28, color: '#00E5FF', delay: 1 },
+  { icon: Database, top: '68%', left: '6%', size: 40, color: '#8B5CF6', delay: 2 },
+  { icon: Sparkles, top: '78%', left: '45%', size: 32, color: '#00E5FF', delay: 1.5 },
+  { icon: Cloud, top: '15%', left: '85%', size: 42, color: '#8B5CF6', delay: 0.5 },
+  { icon: Terminal, top: '62%', left: '90%', size: 34, color: '#6C63FF', delay: 2.5 },
 ];
 
 function ProfilePhoto() {
@@ -161,6 +170,31 @@ export function Hero() {
       {/* Background ambient blobs */}
       <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-primary/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[#00E5FF]/5 blur-[130px] rounded-full pointer-events-none" />
+
+      {/* Floating background developer icons */}
+      {FLOATING_BG_ICONS.map((item, i) => {
+        const IconComponent = item.icon;
+        return (
+          <motion.div
+            key={i}
+            className="absolute hidden md:block opacity-[0.06] pointer-events-none z-0"
+            style={{ top: item.top, left: item.left }}
+            animate={{
+              y: [0, -18, 0],
+              x: [0, 8, 0],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 10 + i * 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: item.delay,
+            }}
+          >
+            <IconComponent size={item.size} style={{ color: item.color }} />
+          </motion.div>
+        );
+      })}
 
       <div className="container mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
 

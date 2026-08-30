@@ -1,6 +1,10 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Search, Code2, Monitor, Database, Brain, Settings, GraduationCap, Sparkles } from 'lucide-react';
+import { 
+  Search, Code2, Monitor, Database, Brain, Settings, GraduationCap, Sparkles,
+  Terminal, Coffee, Cpu, FileCode, Palette, Smartphone, BrainCircuit, Binary, 
+  LineChart, GitFork, Github, AppWindow, Image, Layers, HardDrive, Network
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const skillCategories = [
@@ -45,6 +49,29 @@ const skills = [
   { name: 'OOP', category: 'core', level: 90, color: '#6C63FF' },
 ];
 
+function getSkillIcon(name: string) {
+  const n = name.toLowerCase();
+  if (n.includes('python')) return Terminal;
+  if (n.includes('java') && !n.includes('script')) return Coffee;
+  if (n.includes('javascript')) return Code2;
+  if (n === 'c') return Cpu;
+  if (n.includes('html')) return FileCode;
+  if (n.includes('css')) return Palette;
+  if (n.includes('react') || n.includes('flutter')) return Smartphone;
+  if (n.includes('sql') || n.includes('mysql') || n.includes('supabase') || n.includes('dbms')) return Database;
+  if (n.includes('machine learning') || n.includes('scikit')) return BrainCircuit;
+  if (n.includes('numpy') || n.includes('pandas')) return Binary;
+  if (n.includes('matplotlib')) return LineChart;
+  if (n === 'git') return GitFork;
+  if (n.includes('github')) return Github;
+  if (n.includes('code')) return AppWindow;
+  if (n.includes('canva')) return Image;
+  if (n.includes('structures') || n.includes('oop')) return Layers;
+  if (n.includes('operating') || n.includes('systems')) return HardDrive;
+  if (n.includes('networks')) return Network;
+  return Code2;
+}
+
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState('programming');
   const [searchQuery, setSearchQuery] = useState('');
@@ -62,8 +89,6 @@ export function Skills() {
   // SVG parameters for radial progress circle
   const radius = 34;
   const circumference = 2 * Math.PI * radius;
-
-  const remainder = filteredSkills.length % 3;
 
   return (
     <section id="skills" className="py-24 relative" ref={ref}>
@@ -168,6 +193,7 @@ export function Skills() {
                 {filteredSkills.length > 0 ? (
                   filteredSkills.map((skill, index) => {
                     const strokeOffset = circumference - (skill.level / 100) * circumference;
+                    const SkillIcon = getSkillIcon(skill.name);
                     return (
                       <motion.div
                         layout
@@ -185,7 +211,7 @@ export function Skills() {
                           style={{ background: skill.color }}
                         />
 
-                        {/* Circular Progress Dial */}
+                        {/* Circular Progress Dial with Icon inside */}
                         <div className="relative flex items-center justify-center">
                           <svg className="w-20 h-20 transform -rotate-90">
                             {/* Track Circle */}
@@ -212,16 +238,19 @@ export function Skills() {
                             />
                           </svg>
                           
-                          {/* Inner percent label */}
-                          <span className="absolute text-[11px] font-mono font-bold text-white/90">
-                            {skill.level}%
-                          </span>
+                          {/* Inner Skill Icon instead of percentage */}
+                          <div className="absolute flex items-center justify-center">
+                            <SkillIcon size={20} style={{ color: skill.color }} className="group-hover:scale-110 transition-transform" />
+                          </div>
                         </div>
 
                         <div>
-                          <h3 className="font-serif font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/70 transition-all">
-                            {skill.name}
-                          </h3>
+                          <div className="flex items-center justify-center gap-1.5">
+                            <h3 className="font-serif font-bold text-white group-hover:text-[#00E5FF] transition-all">
+                              {skill.name}
+                            </h3>
+                            <span className="text-[10px] font-mono text-white/50">({skill.level}%)</span>
+                          </div>
                           <span className="text-[9px] font-mono tracking-widest uppercase text-white/30 group-hover:text-[#00E5FF] transition-colors mt-0.5 block">
                             {skill.category}
                           </span>
@@ -239,58 +268,6 @@ export function Skills() {
                     <div className="text-secondary font-bold">"{searchQuery}"</div>
                   </motion.div>
                 )}
-
-                {/* Dynamic Skills Filler Card 1 */}
-                {!searchQuery && remainder !== 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: filteredSkills.length * 0.05 }}
-                    className="glass-card p-5 rounded-2xl flex flex-col items-center justify-center gap-4 text-center border relative overflow-hidden group min-h-[170px]"
-                    style={{ borderColor: 'rgba(255,255,255,0.02)' }}
-                  >
-                    <div className="relative w-14 h-14 flex items-center justify-center">
-                      <div className="absolute w-12 h-12 rounded-full border border-secondary/25 animate-ping" />
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                        className="w-10 h-10 rounded-xl glass-card flex items-center justify-center border-secondary/35 shadow-[0_0_15px_rgba(0,229,255,0.15)] bg-secondary/5"
-                      >
-                        <Sparkles size={16} className="text-[#00E5FF]" />
-                      </motion.div>
-                    </div>
-                    <div>
-                      <h3 className="font-serif font-bold text-white/80 group-hover:text-white transition-colors">Learning Always</h3>
-                      <p className="text-[10px] font-mono text-white/40 mt-1 leading-relaxed">Exploring new tools daily</p>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Dynamic Skills Filler Card 2 */}
-                {!searchQuery && remainder === 1 && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: (filteredSkills.length + 1) * 0.05 }}
-                    className="glass-card p-5 rounded-2xl flex flex-col items-center justify-center gap-4 text-center border relative overflow-hidden group min-h-[170px]"
-                    style={{ borderColor: 'rgba(255,255,255,0.02)' }}
-                  >
-                    <div className="relative w-14 h-14 flex items-center justify-center">
-                      <div className="absolute w-12 h-12 rounded-full border border-primary/25 animate-pulse" />
-                      <motion.div
-                        animate={{ y: [0, -4, 0] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-10 h-10 rounded-xl glass-card flex items-center justify-center border-primary/35 shadow-[0_0_15px_rgba(108,99,255,0.15)] bg-primary/5"
-                      >
-                        <Code2 size={16} className="text-primary" />
-                      </motion.div>
-                    </div>
-                    <div>
-                      <h3 className="font-serif font-bold text-white/80 group-hover:text-white transition-colors">More Tools</h3>
-                      <p className="text-[10px] font-mono text-white/40 mt-1 leading-relaxed">Expanding backend stacks</p>
-                    </div>
-                  </motion.div>
-                )}
               </AnimatePresence>
             </div>
           </div>
@@ -301,5 +278,6 @@ export function Skills() {
     </section>
   );
 }
+
 
 

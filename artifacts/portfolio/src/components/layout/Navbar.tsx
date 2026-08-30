@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 
@@ -105,28 +105,55 @@ export function Navbar() {
       </motion.nav>
 
       {/* Mobile Nav Overlay */}
-      <div className={cn(
-        "fixed inset-0 bg-[#050816]/95 backdrop-blur-xl z-40 transition-all duration-300 md:hidden flex flex-col items-center justify-center",
-        mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-      )}>
-        <ul className="flex flex-col items-center space-y-6">
-          {navItems.map((item) => (
-            <li key={item.name}>
-              <button
-                onClick={() => scrollTo(item.href)}
-                className={cn(
-                  'text-2xl font-serif tracking-wide transition-colors interactive',
-                  activeSection === item.href.substring(1)
-                    ? 'text-secondary glow-text-cyan'
-                    : 'text-white/70 hover:text-white'
-                )}
-              >
-                {item.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            animate={{ opacity: 1, backdropFilter: 'blur(24px)' }}
+            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 bg-[#030014]/95 z-40 md:hidden flex flex-col items-center justify-center"
+          >
+            <motion.ul 
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.08,
+                    delayChildren: 0.1
+                  }
+                }
+              }}
+              className="flex flex-col items-center space-y-6"
+            >
+              {navItems.map((item) => (
+                <motion.li 
+                  key={item.name}
+                  variants={{
+                    hidden: { opacity: 0, y: 15 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                >
+                  <button
+                    onClick={() => scrollTo(item.href)}
+                    className={cn(
+                      'text-2xl font-serif tracking-wide transition-colors interactive',
+                      activeSection === item.href.substring(1)
+                        ? 'text-secondary glow-text-cyan'
+                        : 'text-white/70 hover:text-white'
+                    )}
+                  >
+                    {item.name}
+                  </button>
+                </motion.li>
+              ))}
+            </motion.ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

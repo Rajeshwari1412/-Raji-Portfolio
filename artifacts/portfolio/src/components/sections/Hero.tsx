@@ -136,35 +136,56 @@ export function Hero() {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen w-full flex items-center pt-20 overflow-hidden">
       {/* Background ambient blobs */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-secondary/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-primary/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[#00E5FF]/5 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
 
         {/* Left Content */}
-        <div className="flex flex-col items-start pt-10 lg:pt-0">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-start pt-10 lg:pt-0"
+        >
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 2.4, duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6"
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00E5FF]/20 bg-[#00E5FF]/5 backdrop-blur-md mb-6"
           >
-            <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            <span className="text-xs font-mono text-white/80 tracking-wider">AVAILABLE FOR HIRE</span>
+            <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" />
+            <span className="text-xs font-mono text-[#00E5FF]/90 font-bold tracking-widest">GOOGLE GEMINI CAMPUS AMBASSADOR</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.4, duration: 0.9, ease: 'easeOut' }}
-            className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 leading-[1.1]"
+            variants={itemVariants}
+            className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 leading-[1.1] tracking-tight"
           >
-            <span className="block">Kotoju</span>
+            <span className="block opacity-90 font-light">Kotoju</span>
             <span
-              className="block pb-2"
+              className="block pb-2 drop-shadow-[0_0_35px_rgba(108,99,255,0.2)] font-extrabold"
               style={{
                 backgroundImage: 'linear-gradient(90deg, #6C63FF, #00E5FF, #8B5CF6)',
                 WebkitBackgroundClip: 'text',
@@ -176,67 +197,62 @@ export function Hero() {
             </span>
           </motion.h1>
 
-          <div className="h-10 md:h-12 mb-4 flex items-center">
+          <motion.div variants={itemVariants} className="h-10 md:h-12 mb-4 flex items-center">
             <span className="text-xl md:text-3xl font-mono text-white/90">
-              <span className="text-primary mr-2">&gt;</span>
+              <span className="text-[#00E5FF] mr-2 font-bold">&gt;</span>
               <TypeAnimation
                 sequence={[
                   'AI Engineer', 2000,
                   'Salesforce Developer', 2000,
-                  'ML Enthusiast', 2000,
-                  'Full Stack Dev', 2000,
+                  'ML Specialist', 2000,
+                  'Full Stack Architect', 2000,
                 ]}
                 wrapper="span"
                 speed={50}
                 repeat={Infinity}
-                className="font-bold"
+                className="font-bold font-serif"
               />
             </span>
-          </div>
+          </motion.div>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.8, duration: 0.8 }}
+            variants={itemVariants}
             className="text-white/60 text-lg max-w-xl mb-10 leading-relaxed font-light"
           >
-            Computer Science Engineering student passionate about Artificial Intelligence,
-            scalable applications, innovation, and building impactful real-world solutions.
+            Computer Science Engineering student specializing in AI & ML. Crafting intelligent predictive architectures, automating enterprise systems with Salesforce Apex/LWC, and developing high-performance full-stack solutions.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3, duration: 0.8 }}
+            variants={itemVariants}
             className="flex flex-wrap items-center gap-4"
           >
             <a
               href="#"
               download
-              className="interactive group relative px-8 py-4 text-white rounded-full font-medium overflow-hidden"
+              className="interactive group relative px-8 py-4 text-white rounded-full font-medium overflow-hidden shadow-[0_4px_25px_rgba(108,99,255,0.25)] hover:shadow-[0_4px_35px_rgba(108,99,255,0.4)] transition-all"
               style={{ background: 'linear-gradient(135deg, #6C63FF, #8B5CF6)' }}
             >
               <div className="relative flex items-center gap-2">
-                <span>Download Resume</span>
+                <span className="font-mono">Download CV</span>
                 <Download size={18} className="group-hover:translate-y-1 transition-transform" />
               </div>
             </a>
 
             <button
               onClick={scrollToProjects}
-              className="interactive group px-8 py-4 bg-white/5 border border-white/10 hover:border-secondary/50 hover:bg-white/10 text-white rounded-full font-medium transition-all backdrop-blur-md flex items-center gap-2"
+              className="interactive group px-8 py-4 bg-white/5 border border-white/10 hover:border-[#00E5FF]/40 hover:bg-[#00E5FF]/5 text-white rounded-full font-medium transition-all backdrop-blur-md flex items-center gap-2"
             >
-              <span>View Projects</span>
-              <ChevronRight size={18} className="group-hover:translate-x-1 text-secondary transition-transform" />
+              <span className="font-mono">View Showcase</span>
+              <ChevronRight size={18} className="group-hover:translate-x-1 text-[#00E5FF] transition-transform" />
             </button>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Right — Profile Photo */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2.6, duration: 1.5, ease: 'easeOut' }}
+          transition={{ delay: 0.6, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
           className="h-[500px] lg:h-[600px] w-full relative flex items-center justify-center"
         >
           <ProfilePhoto />

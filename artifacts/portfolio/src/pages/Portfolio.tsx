@@ -39,14 +39,17 @@ export default function Portfolio() {
   }, []);
 
   return (
-    <div className="bg-[#050816] min-h-screen text-white font-sans selection:bg-primary/30 selection:text-white overflow-hidden">
+    <div className="bg-[#030014] min-h-screen text-white font-sans selection:bg-primary/30 selection:text-white overflow-hidden relative">
+      {/* Background grid overlay */}
+      <div className="absolute inset-0 grid-bg pointer-events-none z-0" />
+      
       <MouseFollower />
       
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       
       <Navbar />
       
-      <main>
+      <main className="relative z-10">
         <Hero />
         <About />
         <Skills />

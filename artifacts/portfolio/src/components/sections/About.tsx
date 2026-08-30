@@ -1,14 +1,14 @@
 import { useRef } from 'react';
 import { motion, useInView, type Variants } from 'framer-motion';
-import { Sparkles, GraduationCap, MapPin, Calendar, Award } from 'lucide-react';
+import { Sparkles, GraduationCap, MapPin, Calendar, Award, Code, BookOpen, Terminal, Heart, Zap } from 'lucide-react';
 
 const traits = [
-  "Computer Science Engineering Student",
-  "Google Gemini Campus Ambassador",
-  "Salesforce Developer",
-  "AI/ML Enthusiast",
-  "Open Source Contributor",
-  "Hackathon Finalist"
+  { text: "Computer Science Engineering Student", icon: Code, color: "#6C63FF" },
+  { text: "Google Gemini Campus Ambassador", icon: Sparkles, color: "#00E5FF" },
+  { text: "Salesforce Developer", icon: Terminal, color: "#8B5CF6" },
+  { text: "AI/ML Enthusiast", icon: Zap, color: "#00E5FF" },
+  { text: "Open Source Contributor", icon: Heart, color: "#6C63FF" },
+  { text: "Hackathon Finalist", icon: Award, color: "#8B5CF6" }
 ];
 
 const education = [
@@ -18,7 +18,7 @@ const education = [
     period: "2023 – 2027",
     score: "CGPA 8.0+",
     location: "Hyderabad",
-    icon: <GraduationCap className="text-primary" size={20} />
+    icon: <GraduationCap className="text-[#6C63FF]" size={20} />
   },
   {
     institution: "Narayana Junior College",
@@ -26,7 +26,7 @@ const education = [
     period: "2021 – 2023",
     score: "90%",
     location: "Hyderabad",
-    icon: <Award className="text-secondary" size={20} />
+    icon: <Award className="text-[#00E5FF]" size={20} />
   },
   {
     institution: "High School",
@@ -34,7 +34,7 @@ const education = [
     period: "2020 – 2021",
     score: "96%",
     location: "Hyderabad",
-    icon: <Sparkles className="text-accent" size={20} />
+    icon: <Sparkles className="text-[#8B5CF6]" size={20} />
   }
 ];
 
@@ -60,9 +60,10 @@ export function About() {
   return (
     <section id="about" className="py-24 relative" ref={ref}>
       {/* Decorative bg */}
-      <div className="absolute top-1/2 left-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-0 w-80 h-80 bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-secondary/8 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -75,83 +76,86 @@ export function About() {
           <div className="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full" />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           
-          {/* Left Column: Bio & Traits */}
+          {/* Left Column: Bio & Traits (7 Cols) */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="flex flex-col gap-8"
+            className="lg:col-span-7 flex flex-col gap-8"
           >
             <motion.div variants={itemVariants} className="prose prose-invert max-w-none">
-              <p className="text-lg text-white/70 leading-relaxed">
-                Hello! I'm <strong className="text-white font-serif">Kotoju Rajeshwari</strong>. I am a dedicated engineering student deeply fascinated by the intersection of artificial intelligence and scalable software architecture. My journey involves translating complex problems into elegant, efficient, and robust code.
+              <p className="text-lg text-white/70 leading-relaxed font-light">
+                Hello! I'm <strong className="text-white font-serif font-semibold">Kotoju Rajeshwari</strong>. I am a dedicated engineering student deeply fascinated by the intersection of artificial intelligence and scalable software architecture. My journey involves translating complex problems into elegant, efficient, and robust code.
               </p>
-              <p className="text-lg text-white/70 leading-relaxed mt-4">
+              <p className="text-lg text-white/70 leading-relaxed mt-4 font-light">
                 Whether it's building predictive machine learning models, developing robust Salesforce CRM solutions, or participating in national hackathons, I bring an unwavering commitment to engineering excellence. I thrive in environments that challenge me to learn, adapt, and innovate.
               </p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="glass-card p-8 rounded-3xl relative overflow-hidden group">
-              <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary/20 blur-[50px] group-hover:bg-primary/40 transition-colors" />
-              <h3 className="text-xl font-serif font-bold text-white mb-6 flex items-center gap-2">
-                <Sparkles className="text-secondary" /> Identity Core
-              </h3>
-              <ul className="space-y-4">
-                {traits.map((trait, i) => (
-                  <motion.li 
-                    key={i}
-                    whileHover={{ x: 5, color: "#fff" }}
-                    className="flex items-center gap-3 text-white/70 transition-colors"
+            {/* Traits interactive grid */}
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {traits.map((trait, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  className="gradient-border-glow p-4 rounded-2xl glass-card flex items-center gap-4 group"
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center transition-colors"
+                    style={{
+                      background: `${trait.color}15`,
+                      border: `1px solid ${trait.color}30`,
+                    }}
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="font-mono text-sm">{trait}</span>
-                  </motion.li>
-                ))}
-              </ul>
+                    <trait.icon size={18} style={{ color: trait.color }} />
+                  </div>
+                  <span className="font-mono text-sm text-white/80 group-hover:text-white transition-colors">{trait.text}</span>
+                </motion.div>
+              ))}
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Education Timeline */}
+          {/* Right Column: Education Timeline (5 Cols) */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="relative"
+            className="lg:col-span-5 relative"
           >
             {/* Timeline Line */}
-            <div className="absolute left-6 top-4 bottom-4 w-[2px] bg-white/10" />
+            <div className="absolute left-6 top-4 bottom-4 w-[2px] bg-gradient-to-b from-primary via-[#00E5FF] to-transparent opacity-35" />
 
-            <div className="space-y-12">
+            <div className="space-y-8">
               {education.map((edu, i) => (
                 <motion.div 
-                  key={i} 
-                  variants={itemVariants}
-                  className="relative pl-16 group"
+                   key={i} 
+                   variants={itemVariants}
+                   className="relative pl-14 group"
                 >
                   {/* Timeline node */}
-                  <div className="absolute left-[15px] top-1 w-8 h-8 rounded-full glass-card flex items-center justify-center bg-[#050816] border-white/20 z-10 group-hover:scale-110 group-hover:border-primary transition-all duration-300 shadow-[0_0_10px_rgba(0,0,0,0.5)]">
+                  <div className="absolute left-[15px] top-1 w-8 h-8 rounded-full glass-card flex items-center justify-center bg-[#030014] border-white/10 z-10 group-hover:scale-110 group-hover:border-primary transition-all duration-300 shadow-[0_0_15px_rgba(108,99,255,0.2)]">
                     {edu.icon}
                   </div>
 
-                  <div className="glass-card p-6 rounded-2xl border-white/5 hover:border-white/20 transition-colors relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  <div className="glass-card p-6 rounded-2xl border-white/5 hover:border-white/20 transition-colors relative overflow-hidden group/card">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-transparent -translate-x-[100%] group-hover/card:translate-x-[100%] transition-transform duration-1000" />
                     
-                    <h4 className="text-xl font-bold text-white mb-1 font-serif">{edu.institution}</h4>
-                    <p className="text-primary font-medium mb-4">{edu.degree}</p>
+                    <h4 className="text-lg font-bold text-white mb-1 font-serif group-hover/card:text-primary transition-colors">{edu.institution}</h4>
+                    <p className="text-white/60 font-mono text-sm mb-4">{edu.degree}</p>
                     
-                    <div className="grid grid-cols-2 gap-y-2 text-sm text-white/60 font-mono">
+                    <div className="grid grid-cols-2 gap-y-2 text-xs text-white/50 font-mono">
                       <div className="flex items-center gap-2">
-                        <Calendar size={14} />
+                        <Calendar size={13} className="text-white/40" />
                         <span>{edu.period}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Award size={14} className="text-secondary" />
-                        <span className="text-white/90 font-bold">{edu.score}</span>
+                        <Award size={13} className="text-[#00E5FF]" />
+                        <span className="text-white/80 font-bold">{edu.score}</span>
                       </div>
                       <div className="flex items-center gap-2 col-span-2 mt-1">
-                        <MapPin size={14} />
+                        <MapPin size={13} className="text-white/40" />
                         <span>{edu.location}</span>
                       </div>
                     </div>
@@ -166,3 +170,4 @@ export function About() {
     </section>
   );
 }
+

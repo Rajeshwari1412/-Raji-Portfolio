@@ -29,41 +29,64 @@ function ProfilePhoto() {
       {/* Outer ambient glow background halos */}
       <div className="absolute w-[360px] h-[460px] rounded-[2rem] bg-gradient-to-r from-primary/10 via-[#00E5FF]/5 to-accent/10 blur-[80px] pointer-events-none" />
       
-      {/* Premium Portrait Card Container */}
-      <div 
+      {/* Premium Portrait Card Container with Entry animation */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.92, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         className="relative w-full h-full rounded-[2rem] p-[1.5px] overflow-visible group"
-        style={{
-          background: 'linear-gradient(135deg, rgba(108, 99, 255, 0.4), rgba(0, 229, 255, 0.1), rgba(139, 92, 246, 0.4))',
-          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)'
-        }}
       >
-        {/* Main Card Inner Frame */}
-        <div className="w-full h-full rounded-[2rem] overflow-hidden bg-[#0a0820]/95 relative flex flex-col">
-          
-          {/* Executive Headshot image */}
-          <img
-            src="/rajeshwari-profile.jpg"
-            alt="Kotoju Rajeshwari"
-            className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out z-0"
-          />
-
-          {/* Frosted Glass Overlay Badge at the bottom of the card */}
-          <div className="absolute bottom-4 left-4 right-4 z-10 backdrop-blur-md bg-[#030014]/75 border border-white/10 rounded-2xl p-4 flex items-center justify-between shadow-lg">
-            <div>
-              <div className="text-white font-serif font-bold text-sm tracking-wide">Kotoju Rajeshwari</div>
-              <div className="text-[10px] font-mono text-white/50 mt-0.5 tracking-widest uppercase">Campus Ambassador</div>
-            </div>
+        {/* Floating Animation wrapper */}
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-full h-full rounded-[2rem] p-[1.5px] overflow-visible relative"
+          style={{
+            background: 'linear-gradient(135deg, rgba(108, 99, 255, 0.4), rgba(0, 229, 255, 0.1), rgba(139, 92, 246, 0.4))',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)'
+          }}
+        >
+          {/* Main Card Inner Frame */}
+          <div className="w-full h-full rounded-[2rem] overflow-hidden bg-[#0a0820]/95 relative flex flex-col">
             
-            {/* Status dot */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[9px] font-mono font-bold text-green-400">ACTIVE</span>
+            {/* Executive Headshot image */}
+            <img
+              src="/rajeshwari-profile.jpg"
+              alt="Kotoju Rajeshwari"
+              className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out z-0"
+            />
+
+            {/* Diagonal sweeping shine glare overlay */}
+            <motion.div 
+              className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 z-10 pointer-events-none"
+              initial={{ x: '-100%' }}
+              animate={{ x: '100%' }}
+              transition={{ 
+                repeat: Infinity, 
+                repeatDelay: 5, 
+                duration: 2.2, 
+                ease: "easeInOut" 
+              }}
+            />
+
+            {/* Frosted Glass Overlay Badge at the bottom of the card */}
+            <div className="absolute bottom-4 left-4 right-4 z-20 backdrop-blur-md bg-[#030014]/75 border border-white/10 rounded-2xl p-4 flex items-center justify-between shadow-lg">
+              <div>
+                <div className="text-white font-serif font-bold text-sm tracking-wide">Kotoju Rajeshwari</div>
+                <div className="text-[10px] font-mono text-white/50 mt-0.5 tracking-widest uppercase">Campus Ambassador</div>
+              </div>
+              
+              {/* Status dot */}
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-[9px] font-mono font-bold text-green-400">ACTIVE</span>
+              </div>
             </div>
+
+            {/* Tech Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 z-0 pointer-events-none" />
           </div>
 
-          {/* Tech Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 z-0 pointer-events-none" />
-        </div>
 
         {/* Floating tech badges anchored to the corners */}
         
@@ -147,7 +170,8 @@ function ProfilePhoto() {
           <span>Gemini</span>
         </motion.div>
 
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Particle dots */}
       {Array.from({ length: 20 }).map((_, i) => {

@@ -63,6 +63,8 @@ export function Skills() {
   const radius = 34;
   const circumference = 2 * Math.PI * radius;
 
+  const remainder = filteredSkills.length % 3;
+
   return (
     <section id="skills" className="py-24 relative" ref={ref}>
       {/* Decorative background glows */}

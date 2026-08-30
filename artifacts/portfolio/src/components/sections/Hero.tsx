@@ -125,10 +125,6 @@ function ProfilePhoto() {
           </motion.div>
         );
       })}
-    </div>
-  );
-}
-
       {/* Particle dots */}
       {Array.from({ length: 20 }).map((_, i) => {
         const angle = (i / 20) * 360;
@@ -155,6 +151,7 @@ function ProfilePhoto() {
     </div>
   );
 }
+
 
 export function Hero() {
   const scrollToProjects = () => {

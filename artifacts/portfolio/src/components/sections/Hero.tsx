@@ -1,63 +1,82 @@
-import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
 import { TypeAnimation } from 'react-type-animation';
 import { Download, ChevronRight } from 'lucide-react';
 
 const TECH_BADGES = [
-  { label: 'Python', color: '#6C63FF', delay: 0, angle: 0 },
-  { label: 'AI / ML', color: '#00E5FF', delay: 0.4, angle: 72 },
-  { label: 'Salesforce', color: '#8B5CF6', delay: 0.8, angle: 144 },
-  { label: 'React', color: '#00E5FF', delay: 1.2, angle: 216 },
-  { label: 'Gemini', color: '#6C63FF', delay: 1.6, angle: 288 },
+  { label: 'Python', color: '#6C63FF', delay: 0, angle: -30 },
+  { label: 'AI / ML', color: '#00E5FF', delay: 0.4, angle: 42 },
+  { label: 'Salesforce', color: '#8B5CF6', delay: 0.8, angle: 114 },
+  { label: 'React', color: '#00E5FF', delay: 1.2, angle: 186 },
+  { label: 'Gemini', color: '#6C63FF', delay: 1.6, angle: 258 },
 ];
 
-function CSSGlobe() {
+function ProfilePhoto() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {/* Outer glow rings */}
+      {/* Outer animated glow rings */}
       <div className="absolute w-[340px] h-[340px] rounded-full border border-primary/10 animate-[spin_20s_linear_infinite]" />
-      <div className="absolute w-[420px] h-[420px] rounded-full border border-secondary/8 animate-[spin_30s_linear_infinite_reverse]" />
-      <div className="absolute w-[500px] h-[500px] rounded-full border border-accent/6 animate-[spin_45s_linear_infinite]" />
+      <div className="absolute w-[400px] h-[400px] rounded-full border border-secondary/8 animate-[spin_30s_linear_infinite_reverse]" />
+      <div className="absolute w-[460px] h-[460px] rounded-full border border-accent/6 animate-[spin_45s_linear_infinite]" />
 
-      {/* Ambient glow blobs */}
-      <div className="absolute w-72 h-72 rounded-full bg-primary/15 blur-[80px] animate-pulse" />
-      <div className="absolute w-48 h-48 rounded-full bg-secondary/10 blur-[60px] animate-pulse [animation-delay:1s]" />
+      {/* Ambient glow blobs behind photo */}
+      <div className="absolute w-72 h-72 rounded-full bg-primary/20 blur-[80px] animate-pulse" />
+      <div className="absolute w-48 h-48 rounded-full bg-secondary/15 blur-[60px] animate-pulse" style={{ animationDelay: '1s' }} />
+      <div className="absolute w-56 h-56 rounded-full bg-accent/10 blur-[70px] animate-pulse" style={{ animationDelay: '2s' }} />
 
-      {/* Core sphere */}
-      <div className="relative w-56 h-56 rounded-full"
+      {/* Photo frame with glassmorphism border */}
+      <div
+        className="relative w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-full"
         style={{
-          background: 'radial-gradient(ellipse at 35% 35%, #2d1f6e 0%, #161240 45%, #080520 100%)',
+          padding: '4px',
+          background: 'linear-gradient(135deg, #6C63FF, #00E5FF, #8B5CF6, #6C63FF)',
           boxShadow: `
-            0 0 60px rgba(108,99,255,0.35),
-            0 0 120px rgba(108,99,255,0.15),
-            inset 0 0 40px rgba(108,99,255,0.2),
-            inset 0 0 80px rgba(0,0,0,0.5)
+            0 0 40px rgba(108,99,255,0.4),
+            0 0 80px rgba(0,229,255,0.15),
+            0 0 120px rgba(139,92,246,0.1)
           `,
         }}
       >
-        {/* Sphere highlight */}
-        <div className="absolute top-5 left-7 w-16 h-10 rounded-full bg-white/10 blur-sm rotate-[-20deg]" />
-        <div className="absolute top-7 left-9 w-8 h-5 rounded-full bg-white/20 blur-[2px] rotate-[-20deg]" />
-        {/* Equator ring */}
-        <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2" />
-        <div className="absolute top-[40%] left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary/20 to-transparent" />
-        {/* Grid lines */}
-        <div className="absolute inset-0 rounded-full overflow-hidden opacity-20"
+        {/* Inner glass border */}
+        <div
+          className="w-full h-full rounded-full overflow-hidden"
           style={{
-            backgroundImage: `
-              repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(108,99,255,0.3) 28px, rgba(108,99,255,0.3) 29px),
-              repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(108,99,255,0.3) 28px, rgba(108,99,255,0.3) 29px)
-            `,
+            padding: '3px',
+            background: 'rgba(10,8,32,0.8)',
           }}
+        >
+          {/* The actual photo */}
+          <img
+            src="/rajeshwari-profile.jpg"
+            alt="Kotoju Rajeshwari"
+            className="w-full h-full rounded-full object-cover object-top"
+            style={{
+              filter: 'contrast(1.05) brightness(1.02)',
+            }}
+          />
+        </div>
+
+        {/* Shine overlay on frame */}
+        <div
+          className="absolute top-2 left-6 w-20 h-8 rounded-full bg-white/15 blur-md rotate-[-30deg] pointer-events-none"
         />
       </div>
+
+      {/* Status indicator dot */}
+      <motion.div
+        className="absolute"
+        style={{ bottom: '38%', right: '18%' }}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 3.2, duration: 0.5, type: 'spring' }}
+      >
+        <div className="w-5 h-5 rounded-full bg-green-400 border-[3px] border-[#0a0820] shadow-[0_0_12px_rgba(74,222,128,0.6)]" />
+      </motion.div>
 
       {/* Orbiting tech badges */}
       {TECH_BADGES.map((badge, i) => {
         const rad = (badge.angle * Math.PI) / 180;
-        const rx = 200; // ellipse x radius
-        const ry = 90;  // ellipse y radius
+        const rx = 210;
+        const ry = 210;
         const x = Math.cos(rad) * rx;
         const y = Math.sin(rad) * ry;
         return (
@@ -86,13 +105,13 @@ function CSSGlobe() {
       })}
 
       {/* Particle dots */}
-      {Array.from({ length: 24 }).map((_, i) => {
-        const angle = (i / 24) * 360;
-        const r = 230 + Math.sin(i * 1.7) * 40;
+      {Array.from({ length: 20 }).map((_, i) => {
+        const angle = (i / 20) * 360;
+        const r = 250 + Math.sin(i * 1.7) * 30;
         const rad = (angle * Math.PI) / 180;
-        const px = Math.cos(rad) * r * 0.5;
-        const py = Math.sin(rad) * r * 0.3;
-        const size = Math.random() * 3 + 1;
+        const px = Math.cos(rad) * r * 0.45;
+        const py = Math.sin(rad) * r * 0.45;
+        const size = 1.5 + (i % 3);
         return (
           <motion.div
             key={i}
@@ -104,7 +123,7 @@ function CSSGlobe() {
               opacity: 0.5,
             }}
             animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.8, 1.2, 0.8] }}
-            transition={{ duration: 2 + (i % 4), repeat: Infinity, delay: i * 0.1 }}
+            transition={{ duration: 2 + (i % 4), repeat: Infinity, delay: i * 0.15 }}
           />
         );
       })}
@@ -113,19 +132,6 @@ function CSSGlobe() {
 }
 
 export function Hero() {
-  const nameRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    if (nameRef.current) {
-      const chars = nameRef.current.querySelectorAll('.char');
-      gsap.fromTo(
-        chars,
-        { y: 100, opacity: 0, rotateX: -90 },
-        { y: 0, opacity: 1, rotateX: 0, duration: 1.2, stagger: 0.05, ease: 'back.out(1.7)', delay: 2.5 }
-      );
-    }
-  }, []);
-
   const scrollToProjects = () => {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -150,21 +156,25 @@ export function Hero() {
             <span className="text-xs font-mono text-white/80 tracking-wider">AVAILABLE FOR HIRE</span>
           </motion.div>
 
-          <h1
-            ref={nameRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 leading-[1.1] [perspective:1000px]"
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.4, duration: 0.9, ease: 'easeOut' }}
+            className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 leading-[1.1]"
           >
-            <span className="block overflow-hidden pb-2">
-              {'Kotoju'.split('').map((char, i) => (
-                <span key={i} className="char inline-block origin-bottom">{char}</span>
-              ))}
+            <span className="block">Kotoju</span>
+            <span
+              className="block pb-2"
+              style={{
+                backgroundImage: 'linear-gradient(90deg, #6C63FF, #00E5FF, #8B5CF6)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              Rajeshwari
             </span>
-            <span className="block overflow-hidden text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent pb-2">
-              {'Rajeshwari'.split('').map((char, i) => (
-                <span key={i} className="char inline-block origin-bottom">{char}</span>
-              ))}
-            </span>
-          </h1>
+          </motion.h1>
 
           <div className="h-10 md:h-12 mb-4 flex items-center">
             <span className="text-xl md:text-3xl font-mono text-white/90">
@@ -222,17 +232,18 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Right — CSS Globe */}
+        {/* Right — Profile Photo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 2.6, duration: 1.5, ease: 'easeOut' }}
           className="h-[500px] lg:h-[600px] w-full relative flex items-center justify-center"
         >
-          <CSSGlobe />
+          <ProfilePhoto />
         </motion.div>
 
       </div>
     </section>
   );
 }
+

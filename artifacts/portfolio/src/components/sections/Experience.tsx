@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Briefcase, Building2, Calendar, MapPin, ChevronRight } from 'lucide-react';
+import { Briefcase, Building2, Calendar, MapPin, ChevronRight, Cloud, Database, Cpu, Code2, BrainCircuit, BarChart3, Sparkles, Layers } from 'lucide-react';
 
 const experiences = [
   {
@@ -14,7 +14,19 @@ const experiences = [
       "Optimized data querying using advanced SOQL techniques, improving system performance.",
       "Participated in comprehensive CRM development lifecycles."
     ],
-    tech: ["Salesforce", "Apex", "LWC", "SOQL", "CRM"]
+    tech: ["Salesforce", "Apex", "LWC", "SOQL", "CRM"],
+    decorIcons: [
+      { icon: Cloud, label: 'Cloud CRM', color: '#8B5CF6' },
+      { icon: Database, label: 'SOQL', color: '#6C63FF' },
+      { icon: Code2, label: 'Apex', color: '#00E5FF' },
+      { icon: Layers, label: 'LWC', color: '#8B5CF6' },
+    ],
+    codeSnippet: `trigger AccountHandler
+  on Account (before insert) {
+    for (Account acc : Trigger.new) {
+      acc.Status__c = 'Active';
+    }
+  }`,
   },
   {
     role: "AI / ML Intern",
@@ -27,9 +39,72 @@ const experiences = [
       "Implemented Cross Validation techniques to ensure model reliability and prevent overfitting.",
       "Built and deployed predictive models using Scikit-Learn and Python ecosystems."
     ],
-    tech: ["Python", "Scikit-Learn", "Machine Learning", "EDA", "Data Science"]
+    tech: ["Python", "Scikit-Learn", "Machine Learning", "EDA", "Data Science"],
+    decorIcons: [
+      { icon: BrainCircuit, label: 'ML Model', color: '#00E5FF' },
+      { icon: BarChart3, label: 'Analytics', color: '#6C63FF' },
+      { icon: Cpu, label: 'Training', color: '#8B5CF6' },
+      { icon: Sparkles, label: 'AI', color: '#00E5FF' },
+    ],
+    codeSnippet: `from sklearn.ensemble import
+  RandomForestClassifier
+
+model = RandomForestClassifier(
+  n_estimators=100
+)
+model.fit(X_train, y_train)`,
   }
 ];
+
+function DecorPanel({ exp, index, isInView }: { exp: typeof experiences[0]; index: number; isInView: boolean }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+      transition={{ duration: 0.7, delay: index * 0.2 + 0.3 }}
+      className="hidden md:flex md:w-[45%] flex-col items-center justify-center gap-6 py-4"
+    >
+      {/* Floating icon grid */}
+      <div className="grid grid-cols-2 gap-4">
+        {exp.decorIcons.map((item, i) => (
+          <motion.div
+            key={item.label}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 3 + i * 0.7, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+            className="flex flex-col items-center gap-2 px-5 py-4 rounded-2xl backdrop-blur-md"
+            style={{
+              background: 'rgba(255,255,255,0.03)',
+              border: `1px solid ${item.color}30`,
+              boxShadow: `0 0 20px ${item.color}15`,
+            }}
+          >
+            <item.icon size={24} style={{ color: item.color }} />
+            <span className="text-[10px] font-mono text-white/50 tracking-wider">{item.label}</span>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Mini code snippet */}
+      <div
+        className="w-full max-w-[240px] rounded-xl overflow-hidden"
+        style={{
+          background: 'rgba(5,8,22,0.7)',
+          border: '1px solid rgba(255,255,255,0.06)',
+        }}
+      >
+        <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/5">
+          <div className="w-2 h-2 rounded-full bg-red-400/60" />
+          <div className="w-2 h-2 rounded-full bg-yellow-400/60" />
+          <div className="w-2 h-2 rounded-full bg-green-400/60" />
+          <span className="ml-2 text-[9px] font-mono text-white/30">snippet.{index === 0 ? 'apex' : 'py'}</span>
+        </div>
+        <pre className="px-3 py-3 text-[10px] font-mono leading-relaxed text-white/40 overflow-hidden">
+          {exp.codeSnippet}
+        </pre>
+      </div>
+    </motion.div>
+  );
+}
 
 export function Experience() {
   const ref = useRef(null);
@@ -68,7 +143,7 @@ export function Experience() {
               {/* Mobile Timeline Line */}
               <div className="md:hidden absolute left-[15px] top-0 bottom-[-4rem] w-[1px] bg-white/10 last:bottom-0" />
 
-              <div className={`md:flex items-center justify-between w-full ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+              <div className={`md:flex items-start justify-between w-full ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
                 
                 {/* Timeline Dot */}
                 <div className="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-0 w-10 h-10 rounded-full bg-[#050816] border-2 border-accent flex items-center justify-center z-10 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
@@ -117,6 +192,9 @@ export function Experience() {
                   </div>
                 </div>
 
+                {/* Decorative Panel (fills the empty side) */}
+                <DecorPanel exp={exp} index={index} isInView={isInView} />
+
               </div>
             </motion.div>
           ))}
@@ -125,3 +203,4 @@ export function Experience() {
     </section>
   );
 }
+

@@ -73,33 +73,33 @@ export function Contact() {
               <h3 className="text-2xl font-serif font-bold text-white mb-6">Connect.</h3>
               
               <div className="space-y-6 flex-grow">
-                <a href="mailto:rajukjth@gmail.com" className="flex items-center gap-4 text-white/70 hover:text-primary transition-colors group">
+                <a href="mailto:rajikotoju@gmail.com" className="flex items-center gap-4 text-white/70 hover:text-primary transition-colors group">
                   <div className="w-10 h-10 rounded-full glass-card flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Mail size={18} />
                   </div>
                   <div>
                     <p className="text-xs font-mono text-white/40 mb-1">EMAIL</p>
-                    <p className="font-medium">rajukjth@gmail.com</p>
+                    <p className="font-medium">rajikotoju@gmail.com</p>
                   </div>
                 </a>
                 
-                <a href="https://linkedin.com/in/rajeshwari412" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-white/70 hover:text-secondary transition-colors group">
+                <a href="https://linkedin.com/in/Rajeshwari2947" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-white/70 hover:text-secondary transition-colors group">
                   <div className="w-10 h-10 rounded-full glass-card flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
                     <Linkedin size={18} />
                   </div>
                   <div>
                     <p className="text-xs font-mono text-white/40 mb-1">LINKEDIN</p>
-                    <p className="font-medium">/in/rajeshwari412</p>
+                    <p className="font-medium">/in/Rajeshwari2947</p>
                   </div>
                 </a>
                 
-                <a href="https://github.com/Rajeshwari412" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group">
+                <a href="https://github.com/Rajeshwari1412" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group">
                   <div className="w-10 h-10 rounded-full glass-card flex items-center justify-center group-hover:bg-white/20 transition-colors">
                     <Github size={18} />
                   </div>
                   <div>
                     <p className="text-xs font-mono text-white/40 mb-1">GITHUB</p>
-                    <p className="font-medium">github.com/Rajeshwari412</p>
+                    <p className="font-medium">github.com/Rajeshwari1412</p>
                   </div>
                 </a>
               </div>

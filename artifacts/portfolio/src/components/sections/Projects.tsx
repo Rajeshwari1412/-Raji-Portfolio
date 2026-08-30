@@ -3,52 +3,109 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Trophy, Activity, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const categories = ['All', 'AI', 'Web', 'ML'];
+const categories = ['All', 'AI/ML', 'Web', 'Mobile', 'Tools'];
 
 const projects = [
   {
     id: 1,
-    title: "Smart Guardian",
-    subtitle: "AI Road Safety System",
-    description: "An advanced AI-powered system designed to enhance road safety through real-time accident detection and automated emergency alerts via GPS.",
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    tags: ["AI", "GPS", "Computer Vision", "Python"],
-    category: "AI",
-    stat: "94% Prediction Accuracy",
-    badge: "SAP Innovation Marathon Finalist",
+    title: "Stethosco",
+    subtitle: "AI Healthcare Platform",
+    description: "An intelligent healthcare web application providing AI-powered medical assistance and health monitoring capabilities with a modern, responsive interface.",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    tags: ["JavaScript", "AI", "Healthcare", "Web App"],
+    category: "AI/ML",
+    stat: "Live on Vercel",
+    badge: "Latest Project",
     links: {
-      demo: "#",
-      github: "#"
+      demo: "https://stethosco.vercel.app",
+      github: "https://github.com/Rajeshwari1412/Stethosco"
     }
   },
   {
     id: 2,
-    title: "Tripzy",
-    subtitle: "AI Travel Recommendation",
-    description: "A smart travel companion that optimizes budget and suggests personalized itineraries by integrating real-time weather APIs and machine learning recommendation engines.",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    tags: ["Machine Learning", "Weather API", "React", "Python"],
-    category: "ML",
-    stat: "92% Accuracy",
+    title: "Smart Guardian",
+    subtitle: "AI Road Safety System",
+    description: "An advanced accident prevention system featuring risk prediction, driver monitoring, speed control, crash detection, severity analysis, GPS tracking, and golden rescue emergency alerts.",
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    tags: ["Dart", "Flutter", "AI", "GPS", "IoT"],
+    category: "Mobile",
+    stat: "⭐ 1 Star",
+    badge: "SAP Innovation Marathon Finalist",
     links: {
       demo: "#",
-      github: "#"
+      github: "https://github.com/Rajeshwari1412/SmartGuardian_IM26"
     }
   },
   {
     id: 3,
-    title: "Medicine Donation Center Locator",
+    title: "Medicine Donation Locator",
     subtitle: "Healthcare Logistics Platform",
-    description: "A vital platform connecting donors with centers, featuring real-time medicine search, donation tracking, and strict category guidelines for safe handling.",
+    description: "A vital platform connecting donors with medication centers, featuring real-time search, category-based guidelines, donation tracking, and center timings for safe handling.",
     image: "https://images.unsplash.com/photo-1584308666744-24d5e1672322?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    tags: ["Web Dev", "Database", "Logistics", "UI/UX"],
+    tags: ["JavaScript", "Web Dev", "Healthcare", "Maps"],
     category: "Web",
-    stat: "96% System Reliability",
+    stat: "Full-Stack App",
     links: {
       demo: "#",
-      github: "#"
+      github: "https://github.com/Rajeshwari1412/Medication-Donation-Center-Locator-with-Category-Based-Guidelines-and-Timings"
     }
-  }
+  },
+  {
+    id: 4,
+    title: "HeadGuard",
+    subtitle: "Computer Vision Safety System",
+    description: "A Python-based OpenCV system that detects helmet usage to improve rider safety in real time using computer vision and deep learning techniques.",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    tags: ["Python", "OpenCV", "Computer Vision", "Deep Learning"],
+    category: "AI/ML",
+    stat: "Real-Time Detection",
+    links: {
+      demo: "#",
+      github: "https://github.com/Rajeshwari1412/HeadGuard_Python"
+    }
+  },
+  {
+    id: 5,
+    title: "Tripzy",
+    subtitle: "Travel Booking Platform",
+    description: "A modern travel booking platform with Firebase OTP authentication, real-time database, hotel deals, and a responsive animation-rich interface for desktop and mobile.",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    tags: ["HTML", "CSS", "JavaScript", "Firebase"],
+    category: "Web",
+    stat: "Full Frontend App",
+    links: {
+      demo: "#",
+      github: "https://github.com/Rajeshwari1412/Travell-Full-Frontend-Website"
+    }
+  },
+  {
+    id: 6,
+    title: "Travel Planner AI",
+    subtitle: "AI-Powered Trip Optimizer",
+    description: "An intelligent travel companion that transforms every journey into a smarter adventure with AI-powered itinerary planning, budget optimization, and personalized recommendations.",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    tags: ["Python", "AI", "Machine Learning", "NLP"],
+    category: "AI/ML",
+    stat: "Smart Recommendations",
+    links: {
+      demo: "#",
+      github: "https://github.com/Rajeshwari1412/Travell_Planner_AI"
+    }
+  },
+  {
+    id: 7,
+    title: "Basic Calculator",
+    subtitle: "Interactive Web Tool",
+    description: "A clean, modern calculator built with HTML, CSS, and JavaScript featuring all arithmetic operations, a sleek UI with buttons and display screen.",
+    image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    tags: ["HTML", "CSS", "JavaScript"],
+    category: "Tools",
+    stat: "Beginner Friendly",
+    links: {
+      demo: "#",
+      github: "https://github.com/Rajeshwari1412/Basic-calculator"
+    }
+  },
 ];
 
 export function Projects() {

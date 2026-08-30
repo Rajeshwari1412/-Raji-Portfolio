@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { Download, ChevronRight, Cpu, Database, Sparkles, Code2, Cloud, Terminal } from 'lucide-react';
+import { 
+  Download, ChevronRight, Cpu, Database, Sparkles, Code2, Cloud, Terminal,
+  Workflow, Layers, BrainCircuit
+} from 'lucide-react';
 
 const TECH_BADGES = [
-  { label: 'Python', color: '#6C63FF', delay: 0, angle: -30 },
-  { label: 'AI / ML', color: '#00E5FF', delay: 0.4, angle: 42 },
-  { label: 'Salesforce', color: '#8B5CF6', delay: 0.8, angle: 114 },
-  { label: 'React', color: '#00E5FF', delay: 1.2, angle: 186 },
-  { label: 'Gemini', color: '#6C63FF', delay: 1.6, angle: 258 },
+  { label: 'Python', color: '#6C63FF', delay: 0, angle: -30, icon: Terminal },
+  { label: 'AI / ML', color: '#00E5FF', delay: 0.4, angle: 42, icon: BrainCircuit },
+  { label: 'Salesforce', color: '#8B5CF6', delay: 0.8, angle: 114, icon: Cloud },
+  { label: 'React', color: '#00E5FF', delay: 1.2, angle: 186, icon: Layers },
+  { label: 'Gemini', color: '#6C63FF', delay: 1.6, angle: 258, icon: Sparkles },
 ];
 
 const FLOATING_BG_ICONS = [
@@ -21,7 +24,11 @@ const FLOATING_BG_ICONS = [
 
 function ProfilePhoto() {
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
+    <div className="relative w-full h-full flex items-center justify-center scale-95 md:scale-100">
+      {/* Outer animated thin glowing dashed orbit paths */}
+      <div className="absolute w-[360px] h-[360px] rounded-full border border-dashed border-primary/15 animate-[spin_40s_linear_infinite]" />
+      <div className="absolute w-[440px] h-[440px] rounded-full border border-dashed border-secondary/10 animate-[spin_60s_linear_infinite_reverse]" />
+
       {/* Outer animated glow rings */}
       <div className="absolute w-[340px] h-[340px] rounded-full border border-primary/10 animate-[spin_20s_linear_infinite]" />
       <div className="absolute w-[400px] h-[400px] rounded-full border border-secondary/8 animate-[spin_30s_linear_infinite_reverse]" />
@@ -34,14 +41,14 @@ function ProfilePhoto() {
 
       {/* Photo frame with glassmorphism border */}
       <div
-        className="relative w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-full"
+        className="relative w-[270px] h-[270px] md:w-[310px] md:h-[310px] rounded-full"
         style={{
           padding: '4px',
           background: 'linear-gradient(135deg, #6C63FF, #00E5FF, #8B5CF6, #6C63FF)',
           boxShadow: `
-            0 0 40px rgba(108,99,255,0.4),
-            0 0 80px rgba(0,229,255,0.15),
-            0 0 120px rgba(139,92,246,0.1)
+            0 0 45px rgba(108,99,255,0.4),
+            0 0 90px rgba(0,229,255,0.2),
+            0 0 130px rgba(139,92,246,0.15)
           `,
         }}
       >
@@ -50,16 +57,16 @@ function ProfilePhoto() {
           className="w-full h-full rounded-full overflow-hidden"
           style={{
             padding: '3px',
-            background: 'rgba(10,8,32,0.8)',
+            background: 'rgba(10,8,32,0.85)',
           }}
         >
-          {/* The actual photo */}
+          {/* The actual photo with coat */}
           <img
             src="/rajeshwari-profile.jpg"
             alt="Kotoju Rajeshwari"
             className="w-full h-full rounded-full object-cover object-top"
             style={{
-              filter: 'contrast(1.05) brightness(1.02)',
+              filter: 'contrast(1.04) brightness(1.01)',
             }}
           />
         </div>
@@ -72,26 +79,27 @@ function ProfilePhoto() {
 
       {/* Status indicator dot */}
       <motion.div
-        className="absolute"
+        className="absolute z-20"
         style={{ bottom: '38%', right: '18%' }}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 3.2, duration: 0.5, type: 'spring' }}
       >
-        <div className="w-5 h-5 rounded-full bg-green-400 border-[3px] border-[#0a0820] shadow-[0_0_12px_rgba(74,222,128,0.6)]" />
+        <div className="w-5 h-5 rounded-full bg-green-400 border-[3px] border-[#030014] shadow-[0_0_15px_rgba(74,222,128,0.7)]" />
       </motion.div>
 
       {/* Orbiting tech badges */}
       {TECH_BADGES.map((badge, i) => {
         const rad = (badge.angle * Math.PI) / 180;
-        const rx = 210;
-        const ry = 210;
+        const rx = 215;
+        const ry = 215;
         const x = Math.cos(rad) * rx;
         const y = Math.sin(rad) * ry;
+        const IconComponent = badge.icon;
         return (
           <motion.div
             key={badge.label}
-            className="absolute"
+            className="absolute z-20"
             style={{ x, y }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -99,19 +107,27 @@ function ProfilePhoto() {
           >
             <motion.div
               animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
-              className="px-3 py-1.5 rounded-full text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md"
+              transition={{ duration: 3.5 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card group hover:scale-105 transition-transform"
               style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: `1px solid ${badge.color}55`,
-                boxShadow: `0 0 15px ${badge.color}40`,
+                border: `1px solid ${badge.color}45`,
+                boxShadow: `0 0 15px ${badge.color}25`,
               }}
             >
-              {badge.label}
+              <div 
+                className="w-5 h-5 rounded-md flex items-center justify-center"
+                style={{ background: `${badge.color}15` }}
+              >
+                <IconComponent size={12} style={{ color: badge.color }} />
+              </div>
+              <span>{badge.label}</span>
             </motion.div>
           </motion.div>
         );
       })}
+    </div>
+  );
+}
 
       {/* Particle dots */}
       {Array.from({ length: 20 }).map((_, i) => {

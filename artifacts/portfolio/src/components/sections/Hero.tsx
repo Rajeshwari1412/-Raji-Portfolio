@@ -24,17 +24,17 @@ const FLOATING_BG_ICONS = [
 
 function ProfilePhoto() {
   return (
-    <div className="relative w-[300px] h-[380px] md:w-[320px] md:h-[420px] flex items-center justify-center">
+    <div className="relative w-[300px] h-[300px] md:w-[340px] md:h-[340px] flex items-center justify-center">
       
-      {/* Subtly soft background head glow */}
-      <div className="absolute w-64 h-64 rounded-full bg-primary/10 blur-[100px] pointer-events-none" />
+      {/* Subtly soft background ambient glow halo */}
+      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 via-[#00E5FF]/10 to-accent/15 blur-[60px] animate-pulse" />
 
-      {/* Floating Portrait Wrapper */}
+      {/* Floating Portrait Circle Wrapper */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 25 }}
+        initial={{ opacity: 0, scale: 0.9, y: 30 }}
         animate={{ 
           opacity: 1, 
-          scale: 1,
+          scale: [1, 1.02, 1],
           y: [0, -12, 0] 
         }}
         transition={{
@@ -43,32 +43,42 @@ function ProfilePhoto() {
             repeat: Infinity,
             ease: "easeInOut"
           },
+          scale: {
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          },
           default: { duration: 1.2 }
         }}
-        className="relative w-full h-full overflow-hidden rounded-[2.5rem] group"
+        className="relative w-full h-full overflow-hidden rounded-full group"
+        style={{
+          boxShadow: '0 0 50px rgba(108, 99, 255, 0.25), inset 0 0 40px rgba(0, 0, 0, 0.8)'
+        }}
       >
         {/* The Headshot Image */}
         <img
           src="/rajeshwari-profile.jpg"
           alt="Kotoju Rajeshwari"
-          className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out z-0"
+          className="w-full h-full object-cover object-top transform group-hover:scale-105 transition-transform duration-700 ease-out z-0"
           style={{
-            filter: 'contrast(1.03) brightness(1.02)'
+            filter: 'contrast(1.04) brightness(1.02)'
           }}
         />
 
-        {/* Bottom Fade Mask (fades the jacket seamlessly into the background) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-95 pointer-events-none" />
-        
-        {/* Side Blend overlays for seamless emergence */}
-        <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#030014]/60 to-transparent pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#030014]/60 to-transparent pointer-events-none" />
-        <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#030014]/40 to-transparent pointer-events-none" />
+        {/* Radial Edge Vignette & Bottom Fade (blends the edges of the circle into the dark portfolio backdrop) */}
+        <div 
+          className="absolute inset-0 pointer-events-none rounded-full"
+          style={{
+            background: 'radial-gradient(circle, transparent 45%, #030014 96%), linear-gradient(to top, #030014 10%, transparent 45%)',
+            opacity: 0.95
+          }}
+        />
       </motion.div>
 
     </div>
   );
 }
+
 
 
 

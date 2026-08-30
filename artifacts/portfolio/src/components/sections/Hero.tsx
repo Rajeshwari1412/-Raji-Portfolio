@@ -24,107 +24,131 @@ const FLOATING_BG_ICONS = [
 
 function ProfilePhoto() {
   return (
-    <div className="relative w-full h-full flex items-center justify-center scale-95 md:scale-100">
-      {/* Outer animated thin glowing dashed orbit paths */}
-      <div className="absolute w-[360px] h-[360px] rounded-full border border-dashed border-primary/15 animate-[spin_40s_linear_infinite]" />
-      <div className="absolute w-[440px] h-[440px] rounded-full border border-dashed border-secondary/10 animate-[spin_60s_linear_infinite_reverse]" />
-
-      {/* Outer animated glow rings */}
-      <div className="absolute w-[340px] h-[340px] rounded-full border border-primary/10 animate-[spin_20s_linear_infinite]" />
-      <div className="absolute w-[400px] h-[400px] rounded-full border border-secondary/8 animate-[spin_30s_linear_infinite_reverse]" />
-      <div className="absolute w-[460px] h-[460px] rounded-full border border-accent/6 animate-[spin_45s_linear_infinite]" />
-
-      {/* Ambient glow blobs behind photo */}
-      <div className="absolute w-72 h-72 rounded-full bg-primary/20 blur-[80px] animate-pulse" />
-      <div className="absolute w-48 h-48 rounded-full bg-secondary/15 blur-[60px] animate-pulse" style={{ animationDelay: '1s' }} />
-      <div className="absolute w-56 h-56 rounded-full bg-accent/10 blur-[70px] animate-pulse" style={{ animationDelay: '2s' }} />
-
-      {/* Photo frame with glassmorphism border */}
-      <div
-        className="relative w-[270px] h-[270px] md:w-[310px] md:h-[310px] rounded-full"
+    <div className="relative w-[320px] h-[400px] md:w-[340px] md:h-[445px] flex items-center justify-center scale-95 md:scale-100">
+      
+      {/* Outer ambient glow background halos */}
+      <div className="absolute w-[360px] h-[460px] rounded-[2rem] bg-gradient-to-r from-primary/10 via-[#00E5FF]/5 to-accent/10 blur-[80px] pointer-events-none" />
+      
+      {/* Premium Portrait Card Container */}
+      <div 
+        className="relative w-full h-full rounded-[2rem] p-[1.5px] overflow-visible group"
         style={{
-          padding: '4px',
-          background: 'linear-gradient(135deg, #6C63FF, #00E5FF, #8B5CF6, #6C63FF)',
-          boxShadow: `
-            0 0 45px rgba(108,99,255,0.4),
-            0 0 90px rgba(0,229,255,0.2),
-            0 0 130px rgba(139,92,246,0.15)
-          `,
+          background: 'linear-gradient(135deg, rgba(108, 99, 255, 0.4), rgba(0, 229, 255, 0.1), rgba(139, 92, 246, 0.4))',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)'
         }}
       >
-        {/* Inner glass border */}
-        <div
-          className="w-full h-full rounded-full overflow-hidden"
-          style={{
-            padding: '3px',
-            background: 'rgba(10,8,32,0.85)',
-          }}
-        >
-          {/* The actual photo with coat */}
+        {/* Main Card Inner Frame */}
+        <div className="w-full h-full rounded-[2rem] overflow-hidden bg-[#0a0820]/95 relative flex flex-col">
+          
+          {/* Executive Headshot image */}
           <img
             src="/rajeshwari-profile.jpg"
             alt="Kotoju Rajeshwari"
-            className="w-full h-full rounded-full object-cover object-top"
-            style={{
-              filter: 'contrast(1.04) brightness(1.01)',
-            }}
+            className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out z-0"
           />
+
+          {/* Frosted Glass Overlay Badge at the bottom of the card */}
+          <div className="absolute bottom-4 left-4 right-4 z-10 backdrop-blur-md bg-[#030014]/75 border border-white/10 rounded-2xl p-4 flex items-center justify-between shadow-lg">
+            <div>
+              <div className="text-white font-serif font-bold text-sm tracking-wide">Kotoju Rajeshwari</div>
+              <div className="text-[10px] font-mono text-white/50 mt-0.5 tracking-widest uppercase">Campus Ambassador</div>
+            </div>
+            
+            {/* Status dot */}
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-[9px] font-mono font-bold text-green-400">ACTIVE</span>
+            </div>
+          </div>
+
+          {/* Tech Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 z-0 pointer-events-none" />
         </div>
 
-        {/* Shine overlay on frame */}
-        <div
-          className="absolute top-2 left-6 w-20 h-8 rounded-full bg-white/15 blur-md rotate-[-30deg] pointer-events-none"
-        />
+        {/* Floating tech badges anchored to the corners */}
+        
+        {/* Badge 1: Python - Top Left */}
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-4 -left-6 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
+          style={{
+            border: '1px solid rgba(108, 99, 255, 0.4)',
+            boxShadow: '0 0 15px rgba(108, 99, 255, 0.2)'
+          }}
+        >
+          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#6C63FF]/15">
+            <Terminal size={12} className="text-[#6C63FF]" />
+          </div>
+          <span>Python</span>
+        </motion.div>
+
+        {/* Badge 2: AI / ML - Top Right */}
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+          className="absolute -top-4 -right-6 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
+          style={{
+            border: '1px solid rgba(0, 229, 255, 0.4)',
+            boxShadow: '0 0 15px rgba(0, 229, 255, 0.2)'
+          }}
+        >
+          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#00E5FF]/15">
+            <BrainCircuit size={12} className="text-[#00E5FF]" />
+          </div>
+          <span>AI / ML</span>
+        </motion.div>
+
+        {/* Badge 3: Salesforce - Middle Left */}
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          className="absolute top-1/2 -left-10 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
+          style={{
+            border: '1px solid rgba(139, 92, 246, 0.4)',
+            boxShadow: '0 0 15px rgba(139, 92, 246, 0.2)'
+          }}
+        >
+          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#8B5CF6]/15">
+            <Cloud size={12} className="text-[#8B5CF6]" />
+          </div>
+          <span>Salesforce</span>
+        </motion.div>
+
+        {/* Badge 4: React - Bottom Right */}
+        <motion.div
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+          className="absolute bottom-20 -right-8 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
+          style={{
+            border: '1px solid rgba(0, 229, 255, 0.4)',
+            boxShadow: '0 0 15px rgba(0, 229, 255, 0.2)'
+          }}
+        >
+          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#00E5FF]/15">
+            <Layers size={12} className="text-[#00E5FF]" />
+          </div>
+          <span>React</span>
+        </motion.div>
+
+        {/* Badge 5: Gemini - Bottom Left */}
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className="absolute bottom-24 -left-12 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
+          style={{
+            border: '1px solid rgba(108, 99, 255, 0.4)',
+            boxShadow: '0 0 15px rgba(108, 99, 255, 0.2)'
+          }}
+        >
+          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#6C63FF]/15">
+            <Sparkles size={12} className="text-[#6C63FF]" />
+          </div>
+          <span>Gemini</span>
+        </motion.div>
+
       </div>
 
-      {/* Status indicator dot */}
-      <motion.div
-        className="absolute z-20"
-        style={{ bottom: '38%', right: '18%' }}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 3.2, duration: 0.5, type: 'spring' }}
-      >
-        <div className="w-5 h-5 rounded-full bg-green-400 border-[3px] border-[#030014] shadow-[0_0_15px_rgba(74,222,128,0.7)]" />
-      </motion.div>
-
-      {/* Orbiting tech badges */}
-      {TECH_BADGES.map((badge, i) => {
-        const rad = (badge.angle * Math.PI) / 180;
-        const rx = 215;
-        const ry = 215;
-        const x = Math.cos(rad) * rx;
-        const y = Math.sin(rad) * ry;
-        const IconComponent = badge.icon;
-        return (
-          <motion.div
-            key={badge.label}
-            className="absolute z-20"
-            style={{ x, y }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 2.8 + badge.delay, duration: 0.5, type: 'spring' }}
-          >
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.5 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card group hover:scale-105 transition-transform"
-              style={{
-                border: `1px solid ${badge.color}45`,
-                boxShadow: `0 0 15px ${badge.color}25`,
-              }}
-            >
-              <div 
-                className="w-5 h-5 rounded-md flex items-center justify-center"
-                style={{ background: `${badge.color}15` }}
-              >
-                <IconComponent size={12} style={{ color: badge.color }} />
-              </div>
-              <span>{badge.label}</span>
-            </motion.div>
-          </motion.div>
-        );
-      })}
       {/* Particle dots */}
       {Array.from({ length: 20 }).map((_, i) => {
         const angle = (i / 20) * 360;

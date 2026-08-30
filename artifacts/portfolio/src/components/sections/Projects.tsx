@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Trophy, Activity, ArrowUpRight, Code2, Globe, Database, Smartphone, Wrench } from 'lucide-react';
+import { ExternalLink, Github, Trophy, Activity, ArrowUpRight, Code2, Globe, Database, Smartphone, Wrench, MessageSquare, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const categories = [
@@ -130,6 +130,13 @@ export function Projects() {
     activeCategory === 'All' || project.category === activeCategory
   );
 
+  const remainder = filteredProjects.length % 3;
+  const fillersNeeded = remainder === 0 ? 0 : 3 - remainder;
+
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="projects" className="py-24 relative" ref={ref}>
       {/* Decorative bg */}
@@ -258,10 +265,105 @@ export function Projects() {
                 </div>
               </motion.div>
             ))}
+
+            {/* Dynamic Interactive Filler Card 1 (GitHub) */}
+            {fillersNeeded >= 1 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5, delay: filteredProjects.length * 0.1 }}
+                className="group relative h-full flex flex-col min-h-[400px]"
+              >
+                <div className="absolute -inset-[1px] bg-gradient-to-r from-[#6C63FF] to-[#00E5FF] rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-500 z-0 blur-[1px]" />
+                <div className="relative glass-card rounded-3xl overflow-hidden flex flex-col h-full z-10 bg-[#0a0820]/45 p-8 justify-between items-center text-center">
+                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-15 transition-opacity">
+                    <Plus size={80} className="text-white" />
+                  </div>
+                  
+                  {/* Decorative rotating glowing GitHub icon */}
+                  <div className="relative w-24 h-24 flex items-center justify-center mb-6">
+                    <div className="absolute w-20 h-20 rounded-full border border-[#6C63FF]/30 animate-[spin_10s_linear_infinite]" />
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                      className="w-16 h-16 rounded-2xl glass-card flex items-center justify-center border-[#00E5FF]/30 shadow-[0_0_20px_rgba(0,229,255,0.2)]"
+                    >
+                      <Github size={28} className="text-white" />
+                    </motion.div>
+                  </div>
+
+                  <div>
+                    <span className="text-[#6C63FF] text-xs font-mono font-bold tracking-widest uppercase mb-2 block">GitHub Repositories</span>
+                    <h3 className="text-xl font-serif font-bold text-white mb-3">Explore More Projects</h3>
+                    <p className="text-white/60 text-sm font-light leading-relaxed mb-6">
+                      Check out my open-source codebases, libraries, hackathon forks, and side scripts on my official GitHub profile.
+                    </p>
+                  </div>
+
+                  <a
+                    href="https://github.com/Rajeshwari1412"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="interactive w-full bg-white/5 border border-white/10 hover:border-[#6C63FF]/50 text-white py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-mono transition-all"
+                  >
+                    <span>View GitHub Profile</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Dynamic Interactive Filler Card 2 (Contact) */}
+            {fillersNeeded >= 2 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5, delay: (filteredProjects.length + 1) * 0.1 }}
+                className="group relative h-full flex flex-col min-h-[400px]"
+              >
+                <div className="absolute -inset-[1px] bg-gradient-to-r from-[#8B5CF6] to-[#00E5FF] rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-500 z-0 blur-[1px]" />
+                <div className="relative glass-card rounded-3xl overflow-hidden flex flex-col h-full z-10 bg-[#0a0820]/45 p-8 justify-between items-center text-center">
+                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-15 transition-opacity">
+                    <Plus size={80} className="text-white" />
+                  </div>
+
+                  {/* Pulsing collaboration icon */}
+                  <div className="relative w-24 h-24 flex items-center justify-center mb-6">
+                    <div className="absolute w-20 h-20 rounded-full border border-[#8B5CF6]/30 animate-[spin_10s_linear_infinite_reverse]" />
+                    <motion.div
+                      animate={{ scale: [1, 1.08, 1] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      className="w-16 h-16 rounded-2xl glass-card flex items-center justify-center border-[#8B5CF6]/30 shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+                    >
+                      <MessageSquare size={24} className="text-[#00E5FF]" />
+                    </motion.div>
+                  </div>
+
+                  <div>
+                    <span className="text-[#8B5CF6] text-xs font-mono font-bold tracking-widest uppercase mb-2 block">Hire / Collab</span>
+                    <h3 className="text-xl font-serif font-bold text-white mb-3">Build Something Together</h3>
+                    <p className="text-white/60 text-sm font-light leading-relaxed mb-6">
+                      Looking to build an AI agent, deploy a Salesforce CRM ecosystem, or launch a modern responsive app? Let's connect.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={scrollToContact}
+                    className="interactive w-full bg-white text-black hover:bg-white/90 py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-mono font-bold transition-all"
+                  >
+                    <span>Get In Touch</span>
+                    <ArrowUpRight size={14} />
+                  </button>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </div>
     </section>
   );
 }
+
 

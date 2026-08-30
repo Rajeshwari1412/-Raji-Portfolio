@@ -24,181 +24,53 @@ const FLOATING_BG_ICONS = [
 
 function ProfilePhoto() {
   return (
-    <div className="relative w-[320px] h-[400px] md:w-[340px] md:h-[445px] flex items-center justify-center scale-95 md:scale-100">
+    <div className="relative w-[300px] h-[380px] md:w-[320px] md:h-[420px] flex items-center justify-center">
       
-      {/* Outer ambient glow background halos */}
-      <div className="absolute w-[360px] h-[460px] rounded-[2rem] bg-gradient-to-r from-primary/10 via-[#00E5FF]/5 to-accent/10 blur-[80px] pointer-events-none" />
-      
-      {/* Premium Portrait Card Container with Entry animation */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.92, y: 30 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full h-full rounded-[2rem] p-[1.5px] overflow-visible group"
+      {/* Subtly soft background head glow */}
+      <div className="absolute w-64 h-64 rounded-full bg-primary/10 blur-[100px] pointer-events-none" />
+
+      {/* Floating Portrait Wrapper */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 25 }}
+        animate={{ 
+          opacity: 1, 
+          scale: 1,
+          y: [0, -12, 0] 
+        }}
+        transition={{
+          y: {
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          },
+          default: { duration: 1.2 }
+        }}
+        className="relative w-full h-full overflow-hidden rounded-[2.5rem] group"
       >
-        {/* Floating Animation wrapper */}
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-full h-full rounded-[2rem] p-[1.5px] overflow-visible relative"
+        {/* The Headshot Image */}
+        <img
+          src="/rajeshwari-profile.jpg"
+          alt="Kotoju Rajeshwari"
+          className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out z-0"
           style={{
-            background: 'linear-gradient(135deg, rgba(108, 99, 255, 0.4), rgba(0, 229, 255, 0.1), rgba(139, 92, 246, 0.4))',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)'
+            filter: 'contrast(1.03) brightness(1.02)'
           }}
-        >
-          {/* Main Card Inner Frame */}
-          <div className="w-full h-full rounded-[2rem] overflow-hidden bg-[#0a0820]/95 relative flex flex-col">
-            
-            {/* Executive Headshot image */}
-            <img
-              src="/rajeshwari-profile.jpg"
-              alt="Kotoju Rajeshwari"
-              className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out z-0"
-            />
+        />
 
-            {/* Diagonal sweeping shine glare overlay */}
-            <motion.div 
-              className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 z-10 pointer-events-none"
-              initial={{ x: '-100%' }}
-              animate={{ x: '100%' }}
-              transition={{ 
-                repeat: Infinity, 
-                repeatDelay: 5, 
-                duration: 2.2, 
-                ease: "easeInOut" 
-              }}
-            />
-
-            {/* Frosted Glass Overlay Badge at the bottom of the card */}
-            <div className="absolute bottom-4 left-4 right-4 z-20 backdrop-blur-md bg-[#030014]/75 border border-white/10 rounded-2xl p-4 flex items-center justify-between shadow-lg">
-              <div>
-                <div className="text-white font-serif font-bold text-sm tracking-wide">Kotoju Rajeshwari</div>
-                <div className="text-[10px] font-mono text-white/50 mt-0.5 tracking-widest uppercase">Campus Ambassador</div>
-              </div>
-              
-              {/* Status dot */}
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-[9px] font-mono font-bold text-green-400">ACTIVE</span>
-              </div>
-            </div>
-
-            {/* Tech Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 z-0 pointer-events-none" />
-          </div>
-
-
-        {/* Floating tech badges anchored to the corners */}
+        {/* Bottom Fade Mask (fades the jacket seamlessly into the background) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-95 pointer-events-none" />
         
-        {/* Badge 1: Python - Top Left */}
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -top-4 -left-6 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
-          style={{
-            border: '1px solid rgba(108, 99, 255, 0.4)',
-            boxShadow: '0 0 15px rgba(108, 99, 255, 0.2)'
-          }}
-        >
-          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#6C63FF]/15">
-            <Terminal size={12} className="text-[#6C63FF]" />
-          </div>
-          <span>Python</span>
-        </motion.div>
-
-        {/* Badge 2: AI / ML - Top Right */}
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-          className="absolute -top-4 -right-6 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
-          style={{
-            border: '1px solid rgba(0, 229, 255, 0.4)',
-            boxShadow: '0 0 15px rgba(0, 229, 255, 0.2)'
-          }}
-        >
-          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#00E5FF]/15">
-            <BrainCircuit size={12} className="text-[#00E5FF]" />
-          </div>
-          <span>AI / ML</span>
-        </motion.div>
-
-        {/* Badge 3: Salesforce - Middle Left */}
-        <motion.div
-          animate={{ y: [0, -5, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          className="absolute top-1/2 -left-10 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
-          style={{
-            border: '1px solid rgba(139, 92, 246, 0.4)',
-            boxShadow: '0 0 15px rgba(139, 92, 246, 0.2)'
-          }}
-        >
-          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#8B5CF6]/15">
-            <Cloud size={12} className="text-[#8B5CF6]" />
-          </div>
-          <span>Salesforce</span>
-        </motion.div>
-
-        {/* Badge 4: React - Bottom Right */}
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-          className="absolute bottom-20 -right-8 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
-          style={{
-            border: '1px solid rgba(0, 229, 255, 0.4)',
-            boxShadow: '0 0 15px rgba(0, 229, 255, 0.2)'
-          }}
-        >
-          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#00E5FF]/15">
-            <Layers size={12} className="text-[#00E5FF]" />
-          </div>
-          <span>React</span>
-        </motion.div>
-
-        {/* Badge 5: Gemini - Bottom Left */}
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          className="absolute bottom-24 -left-12 z-20 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white whitespace-nowrap backdrop-blur-md glass-card"
-          style={{
-            border: '1px solid rgba(108, 99, 255, 0.4)',
-            boxShadow: '0 0 15px rgba(108, 99, 255, 0.2)'
-          }}
-        >
-          <div className="w-5 h-5 rounded-md flex items-center justify-center bg-[#6C63FF]/15">
-            <Sparkles size={12} className="text-[#6C63FF]" />
-          </div>
-          <span>Gemini</span>
-        </motion.div>
-
-        </motion.div>
+        {/* Side Blend overlays for seamless emergence */}
+        <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#030014]/60 to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#030014]/60 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#030014]/40 to-transparent pointer-events-none" />
       </motion.div>
 
-      {/* Particle dots */}
-      {Array.from({ length: 20 }).map((_, i) => {
-        const angle = (i / 20) * 360;
-        const r = 250 + Math.sin(i * 1.7) * 30;
-        const rad = (angle * Math.PI) / 180;
-        const px = Math.cos(rad) * r * 0.45;
-        const py = Math.sin(rad) * r * 0.45;
-        const size = 1.5 + (i % 3);
-        return (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              x: px, y: py,
-              width: size, height: size,
-              background: i % 3 === 0 ? '#6C63FF' : i % 3 === 1 ? '#00E5FF' : '#8B5CF6',
-              opacity: 0.5,
-            }}
-            animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.8, 1.2, 0.8] }}
-            transition={{ duration: 2 + (i % 4), repeat: Infinity, delay: i * 0.15 }}
-          />
-        );
-      })}
     </div>
   );
 }
+
+
 
 
 export function Hero() {

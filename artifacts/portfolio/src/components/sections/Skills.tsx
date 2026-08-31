@@ -1,100 +1,214 @@
-import { useState, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useMemo } from 'react';
+import { motion, AnimatePresence, useInView, Variants } from 'framer-motion';
 import { 
-  Search, Code2, Monitor, Database, Brain, Settings, GraduationCap, Sparkles,
+  Search, Code2, Monitor, Database, Brain, Settings, GraduationCap, LineChart,
   Terminal, Coffee, Cpu, FileCode, Palette, Smartphone, BrainCircuit, Binary, 
-  LineChart, GitFork, Github, AppWindow, Image, Layers, HardDrive, Network
+  GitFork, Github, AppWindow, Image, Layers, HardDrive, Network
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
-const skillCategories = [
-  { id: 'programming', name: 'Programming', icon: Code2, color: '#6C63FF', desc: 'Core languages for system and logic building' },
-  { id: 'frontend', name: 'Frontend', icon: Monitor, color: '#00E5FF', desc: 'User interfaces and responsive designs' },
-  { id: 'backend', name: 'Backend & DB', icon: Database, color: '#8B5CF6', desc: 'Server architectures and secure data logic' },
-  { id: 'ai', name: 'AI / Data Science', icon: Brain, color: '#00E5FF', desc: 'Predictive modeling, NLP, and analytics' },
-  { id: 'tools', name: 'Tools & Versioning', icon: Settings, color: '#8B5CF6', desc: 'Development environments and automation workflows' },
-  { id: 'core', name: 'Computer Science Core', icon: GraduationCap, color: '#6C63FF', desc: 'Foundational systems and algorithms' },
+interface SkillItem {
+  name: string;
+  category: string;
+  categoryName: string;
+  axisIndex: number;
+  level: number;
+  color: string;
+}
+
+const leftSkills: SkillItem[] = [
+  // Programming Languages (Axis Index 0)
+  { name: 'Python', category: 'programming', categoryName: 'Programming', axisIndex: 0, level: 90, color: '#6C63FF' },
+  { name: 'Java', category: 'programming', categoryName: 'Programming', axisIndex: 0, level: 85, color: '#6C63FF' },
+  { name: 'C Language', category: 'programming', categoryName: 'Programming', axisIndex: 0, level: 80, color: '#6C63FF' },
+  { name: 'JavaScript', category: 'programming', categoryName: 'Programming', axisIndex: 0, level: 80, color: '#6C63FF' },
+
+  // Web & App Development (Axis Index 1)
+  { name: 'HTML', category: 'web_app', categoryName: 'Web & App', axisIndex: 1, level: 90, color: '#00E5FF' },
+  { name: 'CSS', category: 'web_app', categoryName: 'Web & App', axisIndex: 1, level: 90, color: '#00E5FF' },
+  { name: 'React Native', category: 'web_app', categoryName: 'Web & App', axisIndex: 1, level: 85, color: '#00E5FF' },
+  { name: 'Flutter', category: 'web_app', categoryName: 'Web & App', axisIndex: 1, level: 80, color: '#00E5FF' },
+
+  // Databases (Axis Index 3)
+  { name: 'MySQL', category: 'databases', categoryName: 'Databases', axisIndex: 3, level: 85, color: '#00E5FF' },
+  { name: 'PostgreSQL', category: 'databases', categoryName: 'Databases', axisIndex: 3, level: 80, color: '#00E5FF' },
+  { name: 'Supabase', category: 'databases', categoryName: 'Databases', axisIndex: 3, level: 80, color: '#00E5FF' },
+
+  // Tools & Platforms (Axis Index 5)
+  { name: 'Git', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 85, color: '#6C63FF' },
+  { name: 'GitHub', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 90, color: '#6C63FF' },
+  { name: 'VS Code', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 95, color: '#6C63FF' },
+  { name: 'Canva', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 80, color: '#6C63FF' },
 ];
 
-const skills = [
-  { name: 'Python', category: 'programming', level: 90, color: '#6C63FF' },
-  { name: 'Java', category: 'programming', level: 85, color: '#6C63FF' },
-  { name: 'JavaScript', category: 'programming', level: 80, color: '#6C63FF' },
-  { name: 'C', category: 'programming', level: 75, color: '#6C63FF' },
-  
-  { name: 'HTML5', category: 'frontend', level: 95, color: '#00E5FF' },
-  { name: 'CSS3', category: 'frontend', level: 90, color: '#00E5FF' },
-  { name: 'React Native', category: 'frontend', level: 75, color: '#00E5FF' },
-  { name: 'Flutter', category: 'frontend', level: 70, color: '#00E5FF' },
-  
-  { name: 'PostgreSQL', category: 'backend', level: 80, color: '#8B5CF6' },
-  { name: 'MySQL', category: 'backend', level: 85, color: '#8B5CF6' },
-  { name: 'Supabase', category: 'backend', level: 75, color: '#8B5CF6' },
-  
-  { name: 'Machine Learning', category: 'ai', level: 85, color: '#00E5FF' },
-  { name: 'NumPy', category: 'ai', level: 90, color: '#00E5FF' },
-  { name: 'Pandas', category: 'ai', level: 90, color: '#00E5FF' },
-  { name: 'Matplotlib', category: 'ai', level: 85, color: '#00E5FF' },
-  { name: 'Scikit-Learn', category: 'ai', level: 80, color: '#00E5FF' },
-  
-  { name: 'Git', category: 'tools', level: 85, color: '#8B5CF6' },
-  { name: 'GitHub', category: 'tools', level: 90, color: '#8B5CF6' },
-  { name: 'VS Code', category: 'tools', level: 95, color: '#8B5CF6' },
-  { name: 'Canva', category: 'tools', level: 80, color: '#8B5CF6' },
-  
-  { name: 'Data Structures', category: 'core', level: 80, color: '#6C63FF' },
-  { name: 'DBMS', category: 'core', level: 85, color: '#6C63FF' },
-  { name: 'Operating Systems', category: 'core', level: 75, color: '#6C63FF' },
-  { name: 'Computer Networks', category: 'core', level: 75, color: '#6C63FF' },
-  { name: 'OOP', category: 'core', level: 90, color: '#6C63FF' },
+const rightSkills: SkillItem[] = [
+  // Data Analytics & BI (Axis Index 2)
+  { name: 'Power BI', category: 'analytics', categoryName: 'Analytics & BI', axisIndex: 2, level: 85, color: '#8B5CF6' },
+  { name: 'Adv Excel', category: 'analytics', categoryName: 'Analytics & BI', axisIndex: 2, level: 80, color: '#8B5CF6' },
+  { name: 'SQL Modeling', category: 'analytics', categoryName: 'Analytics & BI', axisIndex: 2, level: 80, color: '#8B5CF6' },
+  { name: 'DAX', category: 'analytics', categoryName: 'Analytics & BI', axisIndex: 2, level: 75, color: '#8B5CF6' },
+
+  // Machine Learning Libraries (Axis Index 4)
+  { name: 'NumPy', category: 'ml_libs', categoryName: 'ML & AI', axisIndex: 4, level: 85, color: '#8B5CF6' },
+  { name: 'Pandas', category: 'ml_libs', categoryName: 'ML & AI', axisIndex: 4, level: 85, color: '#8B5CF6' },
+  { name: 'Matplotlib', category: 'ml_libs', categoryName: 'ML & AI', axisIndex: 4, level: 80, color: '#8B5CF6' },
+  { name: 'Scikit-Learn', category: 'ml_libs', categoryName: 'ML & AI', axisIndex: 4, level: 80, color: '#8B5CF6' },
+  { name: 'ML Concepts', category: 'ml_libs', categoryName: 'ML & AI', axisIndex: 4, level: 85, color: '#8B5CF6' },
+
+  // Core Concepts (Axis Index 5)
+  { name: 'DSA', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 85, color: '#6C63FF' },
+  { name: 'OOP', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 90, color: '#6C63FF' },
+  { name: 'DBMS', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 85, color: '#6C63FF' },
+  { name: 'OS', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 80, color: '#6C63FF' },
+  { name: 'Networks', category: 'core', categoryName: 'Core & Tools', axisIndex: 5, level: 80, color: '#6C63FF' },
 ];
+
+const categoryAxes = [
+  { id: 'programming', name: 'Programming', value: 84, color: '#6C63FF' },
+  { id: 'web_app', name: 'Web & App', value: 86, color: '#00E5FF' },
+  { id: 'analytics', name: 'Analytics & BI', value: 80, color: '#8B5CF6' },
+  { id: 'databases', name: 'Databases', value: 82, color: '#00E5FF' },
+  { id: 'ml_libs', name: 'ML & AI', value: 83, color: '#8B5CF6' },
+  { id: 'core', name: 'Core & Tools', value: 86, color: '#6C63FF' },
+];
+
+const cx = 200;
+const cy = 200;
+const r = 120;
+
+function getRadarPoint(index: number, value: number) {
+  const angle = (index * 60 - 90) * (Math.PI / 180);
+  const x = cx + r * (value / 100) * Math.cos(angle);
+  const y = cy + r * (value / 100) * Math.sin(angle);
+  return { x, y };
+}
+
+function getHexagonPath(value: number) {
+  const points = [];
+  for (let i = 0; i < 6; i++) {
+    const pt = getRadarPoint(i, value);
+    points.push(`${pt.x},${pt.y}`);
+  }
+  return `M ${points.join(' L ')} Z`;
+}
 
 function getSkillIcon(name: string) {
   const n = name.toLowerCase();
   if (n.includes('python')) return Terminal;
   if (n.includes('java') && !n.includes('script')) return Coffee;
   if (n.includes('javascript')) return Code2;
-  if (n === 'c') return Cpu;
+  if (n.includes('c language')) return Cpu;
   if (n.includes('html')) return FileCode;
   if (n.includes('css')) return Palette;
   if (n.includes('react') || n.includes('flutter')) return Smartphone;
   if (n.includes('sql') || n.includes('mysql') || n.includes('supabase') || n.includes('dbms')) return Database;
-  if (n.includes('machine learning') || n.includes('scikit')) return BrainCircuit;
+  if (n.includes('machine learning') || n.includes('scikit') || n.includes('ml')) return BrainCircuit;
   if (n.includes('numpy') || n.includes('pandas')) return Binary;
   if (n.includes('matplotlib')) return LineChart;
-  if (n === 'git') return GitFork;
+  if (n.includes('power bi')) return LineChart;
+  if (n.includes('excel')) return Layers;
+  if (n.includes('dax')) return Brain;
+  if (n.includes('git')) return GitFork;
   if (n.includes('github')) return Github;
-  if (n.includes('code')) return AppWindow;
+  if (n.includes('code') || n.includes('vscode')) return AppWindow;
   if (n.includes('canva')) return Image;
-  if (n.includes('structures') || n.includes('oop')) return Layers;
-  if (n.includes('operating') || n.includes('systems')) return HardDrive;
+  if (n.includes('dsa') || n.includes('oop')) return Layers;
+  if (n.includes('os') || n.includes('operating')) return HardDrive;
   if (n.includes('networks')) return Network;
   return Code2;
 }
 
+interface HexagonBadgeProps {
+  skill: SkillItem;
+  isHovered: boolean;
+  onHover: () => void;
+  onLeave: () => void;
+  isFaded: boolean;
+}
+
+export function HexagonBadge({ skill, isHovered, onHover, onLeave, isFaded }: HexagonBadgeProps) {
+  const Icon = getSkillIcon(skill.name);
+  return (
+    <motion.div 
+      className="w-16 h-[72px] md:w-20 md:h-[86px] relative flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105"
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      style={{
+        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+        background: isHovered ? skill.color : `${skill.color}20`,
+        opacity: isFaded ? 0.25 : 1,
+      }}
+    >
+      {/* Inner Card */}
+      <div 
+        className="w-[60px] h-[68px] md:w-[76px] md:h-[82px] flex flex-col items-center justify-center text-center p-1.5 md:p-2 transition-colors duration-300"
+        style={{
+          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+          background: isHovered ? 'rgba(10, 8, 32, 0.9)' : '#070518',
+        }}
+      >
+        <Icon size={16} style={{ color: skill.color }} className="mb-0.5 md:mb-1" />
+        <span className="text-[7px] md:text-[9px] font-mono font-bold text-white/90 leading-tight tracking-wider truncate max-w-[50px] md:max-w-[64px]">
+          {skill.name}
+        </span>
+        <span className="text-[6px] md:text-[7px] font-mono text-white/40 mt-0.5">
+          {skill.level}%
+        </span>
+      </div>
+    </motion.div>
+  );
+}
+
 export function Skills() {
-  const [activeCategory, setActiveCategory] = useState('programming');
   const [searchQuery, setSearchQuery] = useState('');
+  const [hoveredSkill, setHoveredSkill] = useState<SkillItem | null>(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const filteredSkills = skills.filter(skill => {
-    const matchesCategory = skill.category === activeCategory;
-    const matchesSearch = skill.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return searchQuery ? matchesSearch : matchesCategory;
-  });
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      }
+    }
+  };
 
-  const selectedCategoryMeta = skillCategories.find(c => c.id === activeCategory);
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
+    }
+  };
 
-  // SVG parameters for radial progress circle
-  const radius = 34;
-  const circumference = 2 * Math.PI * radius;
+  // Search logic
+  const isSearchMatch = (name: string) => {
+    if (!searchQuery) return true;
+    return name.toLowerCase().includes(searchQuery.toLowerCase());
+  };
+
+  const isAnySearchMatch = searchQuery !== '';
+
+  const hoveredPt = useMemo(() => {
+    if (!hoveredSkill) return null;
+    return getRadarPoint(hoveredSkill.axisIndex, hoveredSkill.level);
+  }, [hoveredSkill]);
+
+  const radarPolygonPath = useMemo(() => {
+    const points = categoryAxes.map((axis, i) => {
+      const pt = getRadarPoint(i, axis.value);
+      return `${pt.x},${pt.y}`;
+    });
+    return `M ${points.join(' L ')} Z`;
+  }, []);
 
   return (
-    <section id="skills" className="py-24 relative" ref={ref}>
+    <section id="skills" className="py-24 relative overflow-hidden animate-grid" ref={ref}>
       {/* Decorative background glows */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-secondary/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         
@@ -103,20 +217,24 @@ export function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8"
+          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8 text-center md:text-left"
         >
           <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/25 bg-primary/5 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <span className="text-[10px] font-mono text-primary font-bold tracking-widest uppercase text-white/90">RADAR ACUMEN</span>
+            </div>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">02.</span> Technical Arsenal
             </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-secondary to-accent rounded-full" />
+            <div className="h-1 w-24 bg-gradient-to-r from-secondary to-accent rounded-full mx-auto md:mx-0" />
           </div>
 
-          <div className="relative w-full md:w-80 group">
+          <div className="relative w-full md:w-80 group mx-auto md:mx-0">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#00E5FF] transition-colors" size={16} />
             <input 
               type="text"
-              placeholder="Search entire catalog..."
+              placeholder="Search skills..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-[#0a0820]/60 border border-white/15 rounded-2xl py-3.5 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-[#00E5FF] focus:bg-[#0a0820]/90 transition-all font-mono"
@@ -124,153 +242,218 @@ export function Skills() {
           </div>
         </motion.div>
 
-        {/* Dashboard Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* 3-Column Layout: Left Honeycomb + Center Radar Chart + Right Honeycomb */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center justify-center">
           
-          {/* Left Column: Categories List (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-3">
-            <div className="px-2 mb-2 text-xs font-mono font-bold text-white/45 tracking-widest uppercase">CATEGORIES</div>
-            {skillCategories.map(cat => {
-              const Icon = cat.icon;
-              const isActive = activeCategory === cat.id && !searchQuery;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    setSearchQuery('');
-                    setActiveCategory(cat.id);
-                  }}
-                  className={cn(
-                    "w-full text-left p-4 rounded-2xl transition-all duration-300 flex items-center gap-4 border relative group overflow-hidden",
-                    isActive 
-                      ? "bg-white text-black border-white shadow-[0_4px_25px_rgba(255,255,255,0.15)]" 
-                      : "bg-[#0a0820]/30 text-white border-white/5 hover:border-white/15 hover:bg-[#0a0820]/50"
-                  )}
-                >
-                  {/* Subtle active glow light behind */}
-                  {isActive && (
-                    <div 
-                      className="absolute -left-10 top-0 bottom-0 w-24 blur-xl opacity-30 pointer-events-none"
-                      style={{ background: cat.color }}
-                    />
-                  )}
-                  
-                  <div 
-                    className="w-10 h-10 rounded-xl flex items-center justify-center border transition-colors duration-300"
-                    style={{
-                      background: isActive ? '#000' : `${cat.color}12`,
-                      borderColor: isActive ? '#000' : `${cat.color}25`
-                    }}
-                  >
-                    <Icon size={18} style={{ color: isActive ? '#fff' : cat.color }} />
-                  </div>
+          {/* Left Grid (4 cols on desktop) */}
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="lg:col-span-4 order-2 lg:order-1 flex flex-wrap gap-3 md:gap-4 justify-center max-w-[400px] mx-auto"
+          >
+            {leftSkills.map((skill, idx) => {
+              const matched = isSearchMatch(skill.name);
+              const isFaded = isAnySearchMatch && !matched;
+              const isHovered = hoveredSkill?.name === skill.name;
 
-                  <div className="flex-grow">
-                    <div className="font-serif font-bold text-base leading-snug">{cat.name}</div>
-                    <div className={cn("text-xs font-mono mt-0.5", isActive ? "text-black/60" : "text-white/45")}>
-                      {cat.desc}
-                    </div>
-                  </div>
-                </button>
+              return (
+                <motion.div key={skill.name} variants={itemVariants}>
+                  <HexagonBadge 
+                    skill={skill} 
+                    isHovered={isHovered}
+                    isFaded={isFaded}
+                    onHover={() => setHoveredSkill(skill)}
+                    onLeave={() => setHoveredSkill(null)}
+                  />
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
 
-          {/* Right Column: Dynamic Dials Grid (7 cols) */}
-          <div className="lg:col-span-7">
-            {/* Header label for Right Column */}
-            <div className="px-2 mb-4 flex justify-between items-center text-xs font-mono font-bold tracking-widest text-white/45 uppercase">
-              <span>
-                {searchQuery ? `SEARCH RESULTS FOR "${searchQuery.toUpperCase()}"` : `${selectedCategoryMeta?.name.toUpperCase()} CATALOG`}
-              </span>
-              <span className="text-[#00E5FF] flex items-center gap-1">
-                <Sparkles size={11} /> {filteredSkills.length} SKILLS
-              </span>
+          {/* Center Radar Chart (4 cols on desktop) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center justify-center relative min-h-[420px]"
+          >
+            <div className="w-full max-w-[360px] md:max-w-[400px] aspect-square relative select-none">
+              
+              {/* SVG Radar Spider chart */}
+              <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-[0_0_25px_rgba(108,99,255,0.08)]">
+                <defs>
+                  <linearGradient id="radarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#6C63FF" />
+                    <stop offset="50%" stopColor="#00E5FF" />
+                    <stop offset="100%" stopColor="#8B5CF6" />
+                  </linearGradient>
+                </defs>
+
+                {/* Concentric regular hexagons (background grids) */}
+                <path d={getHexagonPath(25)} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                <path d={getHexagonPath(50)} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                <path d={getHexagonPath(75)} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                <path d={getHexagonPath(100)} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.2" strokeDasharray="3 3" />
+
+                {/* Axis lines */}
+                {categoryAxes.map((axis, i) => {
+                  const endPt = getRadarPoint(i, 100);
+                  return (
+                    <line
+                      key={axis.id}
+                      x1={cx}
+                      y1={cy}
+                      x2={endPt.x}
+                      y2={endPt.y}
+                      stroke="rgba(255,255,255,0.1)"
+                      strokeWidth="1.2"
+                    />
+                  );
+                })}
+
+                {/* Main Proficiency Polygon */}
+                <path
+                  d={radarPolygonPath}
+                  fill="rgba(108, 99, 255, 0.12)"
+                  stroke="url(#radarGradient)"
+                  strokeWidth="2.2"
+                  className="transition-all duration-500"
+                  style={{ filter: 'drop-shadow(0 0 8px rgba(108,99,255,0.35))' }}
+                />
+
+                {/* Concentric node ticks on axes */}
+                {categoryAxes.map((axis, i) => {
+                  const pt = getRadarPoint(i, axis.value);
+                  return (
+                    <circle
+                      key={axis.id}
+                      cx={pt.x}
+                      cy={pt.y}
+                      r="3.5"
+                      fill={axis.color}
+                      stroke="#ffffff"
+                      strokeWidth="1"
+                    />
+                  );
+                })}
+
+                {/* Glowing highlighted value tracing */}
+                {hoveredSkill && hoveredPt && (
+                  <g>
+                    <line
+                      x1={cx}
+                      y1={cy}
+                      x2={hoveredPt.x}
+                      y2={hoveredPt.y}
+                      stroke={hoveredSkill.color}
+                      strokeWidth="2"
+                      strokeDasharray="4 2"
+                      className="animate-pulse"
+                    />
+                    <circle
+                      cx={hoveredPt.x}
+                      cy={hoveredPt.y}
+                      r="7.5"
+                      fill={hoveredSkill.color}
+                      className="animate-ping opacity-35"
+                    />
+                    <circle
+                      cx={hoveredPt.x}
+                      cy={hoveredPt.y}
+                      r="4.5"
+                      fill="#ffffff"
+                      stroke={hoveredSkill.color}
+                      strokeWidth="2"
+                    />
+                  </g>
+                )}
+
+                {/* Axes Outer Labels */}
+                {categoryAxes.map((axis, i) => {
+                  const labelPt = getRadarPoint(i, 118);
+                  // Adjust alignment offsets based on position
+                  let textAnchor: 'middle' | 'start' | 'end' = 'middle';
+                  if (Math.abs(labelPt.x - cx) > 10) {
+                    textAnchor = labelPt.x > cx ? 'start' : 'end';
+                  }
+                  
+                  return (
+                    <text
+                      key={axis.id}
+                      x={labelPt.x + (textAnchor === 'start' ? 6 : textAnchor === 'end' ? -6 : 0)}
+                      y={labelPt.y + (i === 0 ? -6 : i === 3 ? 6 : 0)}
+                      fill="rgba(255,255,255,0.4)"
+                      fontSize="9"
+                      fontFamily="monospace"
+                      textAnchor={textAnchor}
+                      dominantBaseline="middle"
+                      className="uppercase tracking-widest font-bold select-none"
+                    >
+                      {axis.name}
+                    </text>
+                  );
+                })}
+              </svg>
+
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <AnimatePresence mode="popLayout">
-                {filteredSkills.length > 0 ? (
-                  filteredSkills.map((skill, index) => {
-                    const strokeOffset = circumference - (skill.level / 100) * circumference;
-                    const SkillIcon = getSkillIcon(skill.name);
-                    return (
-                      <motion.div
-                        layout
-                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
-                        key={skill.name}
-                        className="glass-card p-5 rounded-2xl flex flex-col items-center gap-4 text-center group relative overflow-hidden"
-                        style={{ border: '1px solid rgba(255, 255, 255, 0.03)' }}
-                      >
-                        {/* Glow halo in background of card */}
-                        <div 
-                          className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full blur-[40px] opacity-10 group-hover:opacity-30 transition-opacity duration-300 pointer-events-none"
-                          style={{ background: skill.color }}
-                        />
-
-                        {/* Circular Progress Dial with Icon inside */}
-                        <div className="relative flex items-center justify-center">
-                          <svg className="w-20 h-20 transform -rotate-90">
-                            {/* Track Circle */}
-                            <circle
-                              cx="40"
-                              cy="40"
-                              r={radius}
-                              className="stroke-white/5"
-                              strokeWidth="3.5"
-                              fill="transparent"
-                            />
-                            {/* Glowing Progress Circle */}
-                            <motion.circle
-                              cx="40"
-                              cy="40"
-                              r={radius}
-                              stroke={skill.color}
-                              strokeWidth="4"
-                              fill="transparent"
-                              strokeDasharray={circumference}
-                              initial={{ strokeDashoffset: circumference }}
-                              animate={{ strokeDashoffset: strokeOffset }}
-                              transition={{ duration: 1.2, ease: "easeOut" }}
-                            />
-                          </svg>
-                          
-                          {/* Inner Skill Icon instead of percentage */}
-                          <div className="absolute flex items-center justify-center">
-                            <SkillIcon size={20} style={{ color: skill.color }} className="group-hover:scale-110 transition-transform" />
-                          </div>
-                        </div>
-
-                        <div>
-                          <div className="flex items-center justify-center gap-1.5">
-                            <h3 className="font-serif font-bold text-white group-hover:text-[#00E5FF] transition-all">
-                              {skill.name}
-                            </h3>
-                            <span className="text-[10px] font-mono text-white/50">({skill.level}%)</span>
-                          </div>
-                          <span className="text-[9px] font-mono tracking-widest uppercase text-white/30 group-hover:text-[#00E5FF] transition-colors mt-0.5 block">
-                            {skill.category}
-                          </span>
-                        </div>
-                      </motion.div>
-                    );
-                  })
-                ) : (
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="col-span-full py-16 text-center text-white/40 font-mono flex flex-col items-center justify-center gap-2"
+            {/* Central HUD Readout Overlay (Bottom-center of the radar) */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-full max-w-[280px] text-center bg-[#0a0820]/60 border border-white/5 px-5 py-3.5 rounded-2xl backdrop-blur-md relative overflow-hidden shadow-lg">
+              <AnimatePresence mode="wait">
+                {hoveredSkill ? (
+                  <motion.div
+                    key={hoveredSkill.name}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    className="space-y-0.5"
                   >
-                    <div>No technical assets found matching</div>
-                    <div className="text-secondary font-bold">"{searchQuery}"</div>
+                    <span className="text-[8px] font-mono tracking-widest text-[#00E5FF] uppercase font-bold">
+                      {hoveredSkill.categoryName}
+                    </span>
+                    <h4 className="text-sm font-serif font-bold text-white tracking-wide">
+                      {hoveredSkill.name}
+                    </h4>
+                    <div className="text-[10px] font-mono text-white/50">
+                      MASTERY: <strong style={{ color: hoveredSkill.color }}>{hoveredSkill.level}%</strong>
+                    </div>
                   </motion.div>
+                ) : (
+                  <div className="space-y-0.5 text-white/35 font-mono text-[9px] tracking-wider">
+                    <div>TELEMETRY ACTIVE</div>
+                    <div className="text-[8px] opacity-60">HOVER BADGES TO MAP ACUMEN</div>
+                  </div>
                 )}
               </AnimatePresence>
             </div>
-          </div>
+          </motion.div>
+
+          {/* Right Grid (4 cols on desktop) */}
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="lg:col-span-4 order-3 flex flex-wrap gap-3 md:gap-4 justify-center max-w-[400px] mx-auto"
+          >
+            {rightSkills.map((skill, idx) => {
+              const matched = isSearchMatch(skill.name);
+              const isFaded = isAnySearchMatch && !matched;
+              const isHovered = hoveredSkill?.name === skill.name;
+
+              return (
+                <motion.div key={skill.name} variants={itemVariants}>
+                  <HexagonBadge 
+                    skill={skill} 
+                    isHovered={isHovered}
+                    isFaded={isFaded}
+                    onHover={() => setHoveredSkill(skill)}
+                    onLeave={() => setHoveredSkill(null)}
+                  />
+                </motion.div>
+              );
+            })}
+          </motion.div>
 
         </div>
 
@@ -278,6 +461,3 @@ export function Skills() {
     </section>
   );
 }
-
-
-

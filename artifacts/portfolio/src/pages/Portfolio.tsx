@@ -3,6 +3,7 @@ import Lenis from 'lenis';
 
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { MouseFollower } from '@/components/ui/MouseFollower';
+import { FloatingDevIcons } from '@/components/ui/FloatingDevIcons';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 
@@ -42,6 +43,9 @@ export default function Portfolio() {
     <div className="bg-[#030014] min-h-screen text-white font-sans selection:bg-primary/30 selection:text-white overflow-hidden relative">
       {/* Background grid overlay */}
       <div className="absolute inset-0 grid-bg pointer-events-none z-0" />
+      
+      {/* Floating developer tool visual elements */}
+      <FloatingDevIcons />
       
       <MouseFollower />
       

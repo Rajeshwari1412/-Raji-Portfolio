@@ -5,7 +5,7 @@ import { Trophy, Star, Target, Zap, Flag } from 'lucide-react';
 
 const achievements = [
   {
-    title: "Google Gemini Campus Ambassador",
+    title: "Google Gemini Student Ambassador",
     value: 1,
     suffix: "st",
     description: "Selected to represent Google Gemini on campus, driving AI awareness.",
@@ -15,7 +15,7 @@ const achievements = [
     borderColor: "border-blue-500/20 hover:border-blue-500/40"
   },
   {
-    title: "SAP Innovation Marathon",
+    title: "SAP Innovation Marathon 4.0",
     value: 10,
     suffix: "Top",
     description: "National Finalist for developing the Smart Guardian AI Road Safety System.",

@@ -25,17 +25,17 @@ const certifications = [
     color: "#00E5FF"
   },
   {
-    title: "NPTEL Cloud Computing",
-    issuer: "IIT Kharagpur",
+    title: "NPTEL Certification",
+    issuer: "IIT Kharagpur (Cloud Computing)",
     date: "2023",
     type: "Academic Certification",
     color: "#6C63FF"
   },
   {
-    title: "Kaggle AI Agents",
-    issuer: "Kaggle",
-    date: "2024",
-    type: "Specialization",
+    title: "SAP Certification",
+    issuer: "SAP",
+    date: "2026",
+    type: "Professional Certification",
     color: "#00E5FF"
   }
 ];

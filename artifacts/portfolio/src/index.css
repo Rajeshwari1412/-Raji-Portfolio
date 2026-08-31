@@ -234,3 +234,42 @@ html {
   opacity: 1;
 }
 
+/* Orbit Animations (Uproot / Upright Badges) */
+@keyframes orbit-clockwise {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) translateY(var(--orbit-radius)) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg) translateY(var(--orbit-radius)) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-counter-clockwise {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) translateY(var(--orbit-radius)) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg) translateY(var(--orbit-radius)) rotate(360deg);
+  }
+}
+
+.animate-orbit-cw {
+  --orbit-radius: 155px;
+  animation: orbit-clockwise var(--orbit-duration, 25s) linear infinite;
+}
+
+.animate-orbit-ccw {
+  --orbit-radius: 190px;
+  animation: orbit-counter-clockwise var(--orbit-duration, 35s) linear infinite;
+}
+
+@media (min-width: 768px) {
+  .animate-orbit-cw {
+    --orbit-radius: 185px;
+  }
+  .animate-orbit-ccw {
+    --orbit-radius: 235px;
+  }
+}
+
+

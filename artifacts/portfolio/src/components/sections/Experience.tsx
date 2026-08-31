@@ -4,42 +4,40 @@ import { Briefcase, Building2, Calendar, MapPin, ChevronRight, Cloud, Database, 
 
 const experiences = [
   {
-    role: "Salesforce Developer Intern",
-    company: "SmartBridge (AICTE Internship)",
-    period: "Recent",
-    location: "Remote",
+    role: "AI Empower Intern",
+    company: "Infosys Springboard (Pragati Path to Future)",
+    period: "Apr 2026 – Jun 2026",
+    location: "Virtual",
     highlights: [
-      "Engineered robust Apex Classes and Triggers to automate complex business processes.",
-      "Developed interactive Lightning Web Components (LWC) for customized user interfaces.",
-      "Optimized data querying using advanced SOQL techniques, improving system performance.",
-      "Participated in comprehensive CRM development lifecycles."
+      "Completed an 8-week structured AI upskilling program under Infosys Springboard.",
+      "Applied AI/ML concepts through guided modules and hands-on assessments.",
+      "Collaborated with cohort peers on applied learning tasks and project reviews."
     ],
-    tech: ["Salesforce", "Apex", "LWC", "SOQL", "CRM"],
+    tech: ["AI / ML", "Infosys Springboard", "Collaborative AI"],
     decorIcons: [
-      { icon: Cloud, label: 'Cloud CRM', color: '#8B5CF6' },
-      { icon: Database, label: 'SOQL', color: '#6C63FF' },
-      { icon: Code2, label: 'Apex', color: '#00E5FF' },
-      { icon: Layers, label: 'LWC', color: '#8B5CF6' },
+      { icon: Sparkles, label: 'AI Concepts', color: '#00E5FF' },
+      { icon: BrainCircuit, label: 'ML Upskilling', color: '#6C63FF' },
+      { icon: Cpu, label: 'Compute', color: '#8B5CF6' },
+      { icon: Code2, label: 'Applied AI', color: '#00E5FF' },
     ],
-    codeSnippet: `trigger AccountHandler
-  on Account (before insert) {
-    for (Account acc : Trigger.new) {
-      acc.Status__c = 'Active';
-    }
-  }`,
+    codeSnippet: `# Infosys Springboard
+# AI upskilling protocol
+import springboard_ai as sb
+
+model = sb.UpskillingModel()
+model.train(cohort_8_data)`,
   },
   {
     role: "AI / ML Intern",
-    company: "IBM SkillsBuild",
-    period: "Past",
-    location: "Remote",
+    company: "Edunet Foundation (IBM SkillsBuild)",
+    period: "Dec 2025 – Jan 2026",
+    location: "Virtual",
     highlights: [
-      "Conducted extensive Exploratory Data Analysis (EDA) on large datasets to identify patterns.",
-      "Performed advanced Feature Engineering to enhance model predictive capabilities.",
-      "Implemented Cross Validation techniques to ensure model reliability and prevent overfitting.",
-      "Built and deployed predictive models using Scikit-Learn and Python ecosystems."
+      "Built Machine Learning models using Python and Scikit-Learn.",
+      "Performed data preprocessing, feature engineering, and EDA.",
+      "Evaluated models using cross-validation and performance metrics."
     ],
-    tech: ["Python", "Scikit-Learn", "Machine Learning", "EDA", "Data Science"],
+    tech: ["Python", "Scikit-Learn", "Machine Learning", "EDA", "Model Evaluation"],
     decorIcons: [
       { icon: BrainCircuit, label: 'ML Model', color: '#00E5FF' },
       { icon: BarChart3, label: 'Analytics', color: '#6C63FF' },
@@ -53,6 +51,30 @@ model = RandomForestClassifier(
   n_estimators=100
 )
 model.fit(X_train, y_train)`,
+  },
+  {
+    role: "Salesforce Developer Intern",
+    company: "SmartBridge (AICTE Virtual Internship)",
+    period: "May 2025 – Jul 2025",
+    location: "Virtual",
+    highlights: [
+      "Developed Apex Classes, Triggers, and Lightning Web Components.",
+      "Worked with SOQL queries and Salesforce CRM customization.",
+      "Completed Salesforce Superbadges and hands-on CRM projects."
+    ],
+    tech: ["Salesforce", "Apex", "LWC", "SOQL", "CRM Customization"],
+    decorIcons: [
+      { icon: Cloud, label: 'Cloud CRM', color: '#8B5CF6' },
+      { icon: Database, label: 'SOQL', color: '#6C63FF' },
+      { icon: Code2, label: 'Apex', color: '#00E5FF' },
+      { icon: Layers, label: 'LWC', color: '#8B5CF6' },
+    ],
+    codeSnippet: `trigger AccountHandler
+  on Account (before insert) {
+    for (Account acc : Trigger.new) {
+      acc.Status__c = 'Active';
+    }
+  }`,
   }
 ];
 
@@ -96,7 +118,7 @@ function DecorPanel({ exp, index, isInView }: { exp: typeof experiences[0]; inde
           <div className="w-2 h-2 rounded-full bg-red-400/60" />
           <div className="w-2 h-2 rounded-full bg-yellow-400/60" />
           <div className="w-2 h-2 rounded-full bg-green-400/60" />
-          <span className="ml-2 text-[9px] font-mono text-white/30">snippet.{index === 0 ? 'apex' : 'py'}</span>
+          <span className="ml-2 text-[9px] font-mono text-white/30">snippet.{index === 2 ? 'apex' : 'py'}</span>
         </div>
         <pre className="px-3 py-3 text-[10px] font-mono leading-relaxed text-white/40 overflow-hidden">
           {exp.codeSnippet}

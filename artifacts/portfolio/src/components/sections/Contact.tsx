@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { Mail, Github, Linkedin, Send, Terminal, Loader2, ArrowRight } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,11 +16,16 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
+const EMAILJS_SERVICE_ID = 'service_vf5wchs';
+const EMAILJS_TEMPLATE_ID = 'template_22vdls6';
+const EMAILJS_PUBLIC_KEY = 'M2o6GKH6JnqGGqJXk';
+
 export function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: zodResolver(formSchema)
@@ -27,13 +33,48 @@ export function Contact() {
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    console.log("Form submitted:", data);
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    reset();
-    setTimeout(() => setIsSuccess(false), 3000);
+    setSubmitError(null);
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: data.name,
+          from_name: data.name,
+          initials: data.name
+            .trim()
+            .split(/\s+/)
+            .map((part) => part[0])
+            .join('')
+            .slice(0, 2)
+            .toUpperCase(),
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+          reply_to: data.email,
+          timestamp: new Date().toLocaleString('en-US', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+          }),
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY },
+      );
+
+      setIsSuccess(true);
+      reset();
+      setTimeout(() => setIsSuccess(false), 3000);
+    } catch (error) {
+      console.error('EmailJS submission failed:', error);
+      const emailError = error as { text?: string; message?: string; status?: number };
+      setSubmitError(
+        emailError.text ||
+          emailError.message ||
+          `Email service rejected the request${emailError.status ? ` (${emailError.status})` : ''}.`,
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -215,6 +256,11 @@ export function Contact() {
                   </>
                 )}
               </button>
+              {submitError && (
+                <p className="text-red-400 text-xs text-center mt-4" role="alert">
+                  Message could not be sent: {submitError}
+                </p>
+              )}
             </form>
           </motion.div>
 

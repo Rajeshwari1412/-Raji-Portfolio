@@ -16,9 +16,9 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-const EMAILJS_SERVICE_ID = 'service_vf5wchs';
-const EMAILJS_TEMPLATE_ID = 'template_22vdls6';
-const EMAILJS_PUBLIC_KEY = 'M2o6GKH6JnqGGqJXk';
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_vf5wchs';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_o7owkor';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'M2o6GKH6JnqGGqJXk';
 
 export function Contact() {
   const ref = useRef(null);
